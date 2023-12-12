@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.ImgDesignBinding
@@ -50,15 +52,19 @@ class Fav_Adapter(val con: Context): RecyclerView.Adapter<Fav_Adapter.ViewHolder
                 val requestOptions = RequestOptions()
                     .placeholder(R.drawable.ic_baseline_autorenew_24) // الصورة المؤقتة لحالة التحميل
                     .error(R.drawable.error_a) // الصورة المعروضة في حالة حدوث خطأ أثناء التحميل
+                    .format(DecodeFormat.PREFER_RGB_565)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(true)
                 Glide.with(con)
+                    .asBitmap() // تحميل الصورة كـ Bitmap
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
                     .override(targetWidth, targetHeight)
-//                    .quality(80) // تحديد جودة الصورة (0-100)
-//                    .thumbnail(0.5f) // تحديد حجم المصغرة كنسبة من حجم الصورة الأصلية
                     .circleCrop()
                     .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imgadapterImgViewContent)
+
 
         }
 

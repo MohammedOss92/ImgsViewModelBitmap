@@ -412,13 +412,7 @@ class FourFragment : Fragment() {
 
 
 
-    private fun showSaveSuccessMessage() {
-        Snackbar.make(requireView(), "تم الحفظ بنجاح", Snackbar.LENGTH_SHORT).show()
-    }
 
-    private fun showSaveErrorMessage() {
-        Snackbar.make(requireView(), "حدث خطأ أثناء الحفظ", Snackbar.LENGTH_SHORT).show()
-    }
 
 
 
@@ -492,6 +486,7 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out
                             e.printStackTrace()
                             Log.e("MyApp", "An error occurred: ${e.message}")
                             showSaveErrorMessage()
+                            Log.e("MyApp", "An error occurred: ${e.message}")
                         }
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {
@@ -499,6 +494,14 @@ override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out
                     }
                 })
         }
+
+    }
+    private fun showSaveSuccessMessage() {
+        Snackbar.make(requireView(), "تم الحفظ بنجاح", Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun showSaveErrorMessage() {
+        Snackbar.make(requireView(), "حدث خطأ أثناء الحفظ", Snackbar.LENGTH_SHORT).show()
     }
 
 //    fun saveImageToExternalStorage(position: Int) {
