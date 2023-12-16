@@ -23,6 +23,7 @@
         android:largeHeap="true"
         android:hardwareAccelerated="false"
         >
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -38,6 +39,16 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1895204889916566~7873425083"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.sarrawi.img.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 

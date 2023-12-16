@@ -1,6 +1,11 @@
 package com.sarrawi.img.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -59,6 +64,30 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 
             binding.saveImgpager.setOnClickListener {
                 onSaveImageClickListenerfp?.onSaveImageClickfp(adapterPosition)
+            }
+
+            binding.share?.setOnClickListener {
+                // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+
+                val drawable: BitmapDrawable = binding.imageViewpager.getDrawable() as BitmapDrawable
+                val bitmap: Bitmap = drawable.bitmap
+
+                val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                    con.contentResolver,
+                    bitmap,
+                    "title",
+                    null
+                )
+
+                val uri: Uri = Uri.parse(bitmapPath)
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/png"
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                con.startActivity(Intent.createChooser(intent, "Share"))
+
             }
         }
     }

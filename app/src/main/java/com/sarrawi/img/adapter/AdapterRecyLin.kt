@@ -1,10 +1,19 @@
 package com.sarrawi.img.adapter
 
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import android.provider.MediaStore.Images
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +24,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.RowImagesBinding
-
 import com.sarrawi.img.model.ImgsModel
+import java.io.*
+
 
 class AdapterRecyLin(val con: Context):
     RecyclerView.Adapter<AdapterRecyLin.ViewHolder>() {
@@ -50,7 +60,10 @@ class AdapterRecyLin(val con: Context):
                 binding.saveImg.setOnClickListener {
                     onSaveImageClickListener?.onSaveImageClick(adapterPosition)
                 }
-        }
+
+
+
+            }
         else{
             binding.root.setOnClickListener{
 //                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
@@ -105,6 +118,8 @@ class AdapterRecyLin(val con: Context):
 
 
 
+
+
             binding.apply {
              if(current_imgModel.is_fav){
                 imgFave.setImageResource(R.drawable.baseline_favorite_true)
@@ -113,6 +128,30 @@ class AdapterRecyLin(val con: Context):
              }
 
             }
+
+                binding.share?.setOnClickListener {
+                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+
+                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
+
+                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                        con.contentResolver,
+                        bitmap,
+                        "title",
+                        null
+                    )
+
+                    val uri: Uri = Uri.parse(bitmapPath)
+
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "image/png"
+                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                    con.startActivity(Intent.createChooser(intent, "Share"))
+
+                }
 
             } else {
                 // عند عدم وجود اتصال بالإنترنت، قم بعرض الـ lyNoInternet بدلاً من الصورة
@@ -131,7 +170,29 @@ class AdapterRecyLin(val con: Context):
 //            }
 
 
+            binding.share?.setOnClickListener {
+                // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
 
+                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                val bitmap: Bitmap = drawable.bitmap
+
+                val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                    con.contentResolver,
+                    bitmap,
+                    "title",
+                    null
+                )
+
+                val uri: Uri = Uri.parse(bitmapPath)
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/png"
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                con.startActivity(Intent.createChooser(intent, "Share"))
+
+            }
         }
     }
 
@@ -174,6 +235,24 @@ class AdapterRecyLin(val con: Context):
 
     interface OnSaveImageClickListener {
         fun onSaveImageClick(position: Int)
+    }
+
+    private fun saveImageLocally(bitmap: Bitmap): File {
+        val imagesFolder = File(Environment.getExternalStorageDirectory(), "تطبيق الصور")
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs()
+        }
+
+        val file = File(imagesFolder, "shared_image.png")
+        try {
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            stream.flush()
+            stream.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return file
     }
 
 
