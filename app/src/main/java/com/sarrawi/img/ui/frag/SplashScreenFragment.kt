@@ -37,23 +37,22 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
-        Handler(Looper.myLooper()!!).postDelayed({
-
-
-            findNavController()
-                .navigate(
-                    R.id.action_splashScreenFragment_to_SecondFragment,
-                    null,
-                    NavOptions.Builder()
-                        .setPopUpTo(
-                            R.id.splashScreenFragment,
-                            true).build()
-                )
-
-        },5000)
     }
-
-
 }
+//        Handler(Looper.myLooper()!!).postDelayed({
+//
+//
+//            findNavController()
+//                .navigate(
+//                    R.id.action_splashScreenFragment_to_SecondFragment,
+//                    null,
+//                    NavOptions.Builder()
+//                        .setPopUpTo(
+//                            R.id.splashScreenFragment,
+//                            true).build()
+//                )
+//
+//        },5000)
+//    }
+
+

@@ -59,7 +59,7 @@ class Fav_Adapter(val con: Context): RecyclerView.Adapter<Fav_Adapter.ViewHolder
                     .asBitmap() // تحميل الصورة كـ Bitmap
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .override(targetWidth, targetHeight)
+
                     .circleCrop()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)

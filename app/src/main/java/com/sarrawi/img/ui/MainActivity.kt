@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = ""
+//        setSupportActionBar(binding.toolbar)
+//        supportActionBar?.title = ""
         bottomNav = findViewById(R.id.bottomNav)
 
         navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -60,14 +60,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.splashScreenFragment,
                 R.id.favFragmentLinRecy,
                 R.id.pagerFragmentImg,
+                R.id.FirstFragment,
                 R.id.favoritePagerFrag
             ))
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.splashScreenFragment || destination.id == R.id.thirdFragment ||
+            if (destination.id == R.id.splashScreenFragment ||destination.id == R.id.FirstFragment || destination.id == R.id.thirdFragment ||
                 destination.id == R.id.fourFragment || destination.id == R.id.favFragmentLinRecy
                 || destination.id == R.id.pagerFragmentImg || destination.id == R.id.favoritePagerFrag) {
 
@@ -77,7 +78,9 @@ class MainActivity : AppCompatActivity() {
                 bottomNav.visibility = View.VISIBLE
             }
 
+
         }
+
 
 
 

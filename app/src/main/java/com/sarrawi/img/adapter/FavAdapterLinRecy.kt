@@ -5,10 +5,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -24,6 +26,9 @@ import com.sarrawi.img.databinding.RowimagefavBinding
 import com.sarrawi.img.model.FavoriteImage
 
 import com.sarrawi.img.model.ImgsModel
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 class FavAdapterLinRecy(val con: Context):
     RecyclerView.Adapter<FavAdapterLinRecy.ViewHolder>() {
@@ -72,7 +77,7 @@ class FavAdapterLinRecy(val con: Context):
                     .asBitmap() // تحميل الصورة كـ Bitmap
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .override(targetWidth, targetHeight)
+                    /*.override(targetWidth, targetHeight)*/
                     .circleCrop()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -81,7 +86,8 @@ class FavAdapterLinRecy(val con: Context):
 
 
             binding.saveImg.setOnClickListener {
-                onSaveImageClickListenerfav?.onSaveImageClick(adapterPosition)
+//                onSaveImageClickListenerfav?.onSaveImageClick(adapterPosition)
+                saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
             }
 
             binding.share?.setOnClickListener {
@@ -149,5 +155,34 @@ class FavAdapterLinRecy(val con: Context):
     interface OnSaveImageClickListenerfav {
         fun onSaveImageClick(position: Int)
     }
+
+    // دالة لحفظ الصورة كملف في التخزين الخارجي
+    private fun saveBitmapToExternalStorage(bitmap: Bitmap) {
+        val fileName = "image_${System.currentTimeMillis()}.jpg"
+
+        try {
+            // احصل على مسار التخزين الخارجي
+            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+
+            // تأكد من أن المجلد موجود، إذا لم يكن، قم بإنشاء المجلد
+            if (!imagesDir.exists()) {
+                imagesDir.mkdirs()
+            }
+
+            val imageFile = File(imagesDir, fileName)
+            val outputStream = FileOutputStream(imageFile)
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            outputStream.flush()
+            outputStream.close()
+
+            // إعلام المستخدم بأن الصورة تم حفظها
+            Toast.makeText(con, "تم حفظ الصورة", Toast.LENGTH_SHORT).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            // يمكنك إدراج رسالة خطأ هنا إذا لزم الأمر
+        }
+    }
+
 
 }

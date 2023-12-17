@@ -90,13 +90,13 @@ class FavFragmentLinRecy : Fragment() {
         setUpRv()
         adapterOnClick()
 
-        favAdapterLinRecy.onSaveImageClickListenerfav = object :
-            FavAdapterLinRecy.OnSaveImageClickListenerfav{
-            override fun onSaveImageClick(position: Int) {
-                saveImageToExternalStorage(position)
-            }
-
-        }
+//        favAdapterLinRecy.onSaveImageClickListenerfav = object :
+//            FavAdapterLinRecy.OnSaveImageClickListenerfav{
+//            override fun onSaveImageClick(position: Int) {
+//                saveImageToExternalStorage(position)
+//            }
+//
+//        }
 
     }
 

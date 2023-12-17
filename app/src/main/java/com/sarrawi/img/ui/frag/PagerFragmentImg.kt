@@ -118,11 +118,11 @@ class PagerFragmentImg : Fragment() {
 
         setUpViewPager()
         adapterOnClick()
-        adapterpager.onSaveImageClickListenerp = object : ViewPagerAdapter.OnSaveImageClickListenerp {
-            override fun onSaveImageClickp(position: Int) {
-                saveImageToExternalStorage(position)
-            }
-        }
+//        adapterpager.onSaveImageClickListenerp = object : ViewPagerAdapter.OnSaveImageClickListenerp {
+//            override fun onSaveImageClickp(position: Int) {
+//                saveImageToExternalStorage(position)
+//            }
+//        }
     }
 
     private fun setUpViewPager() =

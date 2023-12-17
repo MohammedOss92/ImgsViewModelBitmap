@@ -143,11 +143,11 @@ class FourFragment : Fragment() {
         }
         imgsViewmodel.checkNetworkConnection(requireContext())
 
-        adapterLinRecy.onSaveImageClickListener = object : AdapterRecyLin.OnSaveImageClickListener {
-            override fun onSaveImageClick(position: Int) {
-                saveImageToExternalStorage(position)
-            }
-        }
+//        adapterLinRecy.onSaveImageClickListener = object : AdapterRecyLin.OnSaveImageClickListener {
+//            override fun onSaveImageClick(position: Int) {
+//                saveImageToExternalStorage(position)
+//            }
+//        }
 
 
 
