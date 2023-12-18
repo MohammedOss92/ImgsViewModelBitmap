@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.adapter.FavAdapterLinRecy
 import com.sarrawi.img.adapter.FavAdapterPager
@@ -81,6 +82,7 @@ class FavoritePagerFrag : Fragment() {
 
         setUpRv()
         adapterOnClick()
+        binding.adView.loadAd(AdRequest.Builder().build())
 //        adapterpager.onSaveImageClickListenerfp = object : FavAdapterPager.OnSaveImageClickListenerfavp {
 //            override fun onSaveImageClickfp(position: Int) {
 //                saveImageToExternalStorage(position)

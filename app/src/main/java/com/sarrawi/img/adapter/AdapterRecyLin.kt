@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -38,7 +41,7 @@ class AdapterRecyLin(val con: Context):
     var onbtnClick: ((item:ImgsModel,position:Int) -> Unit)? = null
     var onSaveImageClickListener: OnSaveImageClickListener? = null
     private var isInternetConnected: Boolean = true
-
+    private var adCount = 4
     private var isToolbarVisible = true
     val displayMetrics = con.resources.displayMetrics
     val screenWidth = displayMetrics.widthPixels
@@ -50,8 +53,9 @@ class AdapterRecyLin(val con: Context):
 
 
     inner class ViewHolder(val binding:RowImagesBinding):RecyclerView.ViewHolder(binding.root) {
-
+        var adView: AdView?=null
         init {
+            adView= itemView.findViewById(R.id.adView)
             if(isInternetConnected) {
                  binding.root.setOnClickListener {
                     onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
@@ -221,6 +225,11 @@ class AdapterRecyLin(val con: Context):
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(position,isInternetConnected)
+        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
+            Log.d("AD_TAG", "Loading Ad at position $position")
+            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
+
+        }
 
     }
 

@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.ImgDesignfavBinding
 import com.sarrawi.img.databinding.RowImagesBinding
@@ -41,14 +44,16 @@ class FavAdapterLinRecy(val con: Context):
     val displayMetrics = con.resources.displayMetrics
     val screenWidth = displayMetrics.widthPixels
     val screenHeight = displayMetrics.heightPixels
-
+    private var adCount = 4
     // قم بتحديد القيم المطلوبة للصورة
     val targetWidth = screenWidth / 2 // على سبيل المثال، يمكنك تحديد العرض إلى نصف عرض الشاشة
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
     inner class ViewHolder(val binding: RowimagefavBinding):RecyclerView.ViewHolder(binding.root) {
+        var adView: AdView?=null
 
         init {
+            adView= itemView.findViewById(R.id.adVieww)
             binding.root.setOnClickListener {
                 //اذا كانت null سيتم استخدام 0؟
 //                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, layoutPosition ?: 0)
@@ -142,6 +147,12 @@ class FavAdapterLinRecy(val con: Context):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+
+        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
+            Log.d("AD_TAG", "Loading Ad at position $position")
+            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
+
+        }
     }
 
     override fun getItemCount(): Int {

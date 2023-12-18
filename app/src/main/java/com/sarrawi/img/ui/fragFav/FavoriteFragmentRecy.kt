@@ -11,6 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.adapter.Fav_Adapter
 import com.sarrawi.img.databinding.FragmentFavoriteRecyBinding
@@ -31,6 +36,8 @@ class FavoriteFragmentRecy : Fragment() {
     private val binding get() = _binding
 
     private val a by lazy {  FavoriteImageRepository(requireActivity().application) }
+    var mInterstitialAd: InterstitialAd?=null
+    var clickCount = 0
 
     private val imgsffav: FavoriteImagesViewModel by viewModels {
         ViewModelFactory2(a)
@@ -63,6 +70,7 @@ class FavoriteFragmentRecy : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        InterstitialAd_fun()
         setUpRva()
         adapterOnClick()
     }
@@ -99,8 +107,19 @@ class FavoriteFragmentRecy : Fragment() {
     private fun adapterOnClick() {
         favAdapter.onItemClick = { _, favimage: FavoriteImage, currentItemId ->
 
-                val directions = FavoriteFragmentRecyDirections.actionFavoriteFragmentRecyToFavFragmentLinRecy(ID, currentItemId,favimage.image_url)
-                findNavController().navigate(directions)
+            clickCount++
+            if (clickCount >= 2) {
+                // بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(requireActivity())
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                }
+                clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+
+            }
+            val directions = FavoriteFragmentRecyDirections.actionFavoriteFragmentRecyToFavFragmentLinRecy(ID, currentItemId,favimage.image_url)
+            findNavController().navigate(directions)
 
         }
         favAdapter.onbtnclick = {
@@ -112,5 +131,34 @@ class FavoriteFragmentRecy : Fragment() {
             snackbar.show()
         }
     }
+
+    fun InterstitialAd_fun (){
+
+
+        MobileAds.initialize(requireActivity()) { initializationStatus ->
+            // do nothing on initialization complete
+        }
+
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            requireActivity(),
+            "ca-app-pub-1895204889916566/2401606550",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    // The mInterstitialAd reference will be null until an ad is loaded.
+                    mInterstitialAd = interstitialAd
+                    Log.i("onAdLoadedL", "onAdLoaded")
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    // Handle the error
+                    Log.d("onAdLoadedF", loadAdError.toString())
+                    mInterstitialAd = null
+                }
+            }
+        )
     }
+
+}
 

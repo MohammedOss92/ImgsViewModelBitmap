@@ -16,12 +16,14 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.Api.ApiService
+import com.sarrawi.img.adapter.AdItemDecoration
 import com.sarrawi.img.adapter.ImgAdapter
 import com.sarrawi.img.databinding.FragmentThirdBinding
 import com.sarrawi.img.db.repository.FavoriteImageRepository
@@ -68,6 +70,7 @@ class ThirdFragment : Fragment() {
     private var currentItemId = -1
     var clickCount = 0
     var mInterstitialAd: InterstitialAd?=null
+    private lateinit var adView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,13 +99,15 @@ class ThirdFragment : Fragment() {
                 adapterOnClick()
                 imgAdapter.updateInternetStatus(isConnected)
                 binding.lyNoInternet.visibility = View.GONE
+
+
             } else {
 //                binding.progressBar.visibility = View.GONE
                 binding.lyNoInternet.visibility = View.VISIBLE
                 imgAdapter.updateInternetStatus(isConnected)
             }
         }
-//        InterstitialAd_fun()
+        InterstitialAd_fun()
 //        setUpRvth()
         setUpRv()
         adapterOnClick()
@@ -139,7 +144,8 @@ class ThirdFragment : Fragment() {
         if (isAdded) {
             imgsViewModel.getAllImgsViewModel(ID).observe(viewLifecycleOwner) { imgs ->
                 imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-
+                val adItemDecoration = AdItemDecoration(adInterval = 4, adHeight = 50) // تحديد الفاصل بين الإعلانات وارتفاع الإعلان
+                binding.rvImgCont.addItemDecoration(adItemDecoration)
                 if (imgs.isEmpty()) {
                     // قم بتحميل البيانات من الخادم إذا كانت القائمة فارغة
                     imgsViewModel.getAllImgsViewModel(ID)
@@ -167,7 +173,9 @@ class ThirdFragment : Fragment() {
                             binding.rvImgCont.scrollToPosition(currentItemId)
                         }
 
+
                     }
+
                 }
 
                 imgAdapter.onItemClick = { _, imgModel: ImgsModel,currentItemId ->
