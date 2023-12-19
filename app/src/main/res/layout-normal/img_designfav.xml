@@ -48,31 +48,31 @@
 
 
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:id="@+id/lyNoInternet"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/imgadapter_ImgViewContent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="vertical"-->
-<!--                android:visibility="gone"-->
-<!--                >-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:id="@+id/lyNoInternet"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@+id/imgadapter_ImgViewContent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent"-->
+            <!--                android:gravity="center"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:visibility="gone"-->
+            <!--                >-->
 
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/nonet"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="No Internet Connection"-->
-<!--                    >-->
-<!--                </TextView>-->
+            <!--                <ImageView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:src="@drawable/nonet"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="No Internet Connection"-->
+            <!--                    >-->
+            <!--                </TextView>-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
