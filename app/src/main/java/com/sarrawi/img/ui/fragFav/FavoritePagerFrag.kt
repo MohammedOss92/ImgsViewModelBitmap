@@ -82,7 +82,7 @@ class FavoritePagerFrag : Fragment() {
 
         setUpRv()
         adapterOnClick()
-        binding.adView.loadAd(AdRequest.Builder().build())
+//        binding.adView.loadAd(AdRequest.Builder().build())
 //        adapterpager.onSaveImageClickListenerfp = object : FavAdapterPager.OnSaveImageClickListenerfavp {
 //            override fun onSaveImageClickfp(position: Int) {
 //                saveImageToExternalStorage(position)

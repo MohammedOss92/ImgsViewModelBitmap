@@ -39,31 +39,30 @@ class Fav_Adapter(val con: Context): RecyclerView.Adapter<Fav_Adapter.ViewHolder
                 onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, fav_img_list[layoutPosition], layoutPosition)
 
             }
-            binding.imgFave.setOnClickListener {
-                onbtnclick?.invoke(fav_img_list[adapterPosition])
-            }
+//            binding.imgFave.setOnClickListener {
+//                onbtnclick?.invoke(fav_img_list[adapterPosition])
+//            }
 
         }
 
         fun bind(position: Int) {
 
 
-                val current_imgModel = fav_img_list[position]
-                val requestOptions = RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_autorenew_24) // الصورة المؤقتة لحالة التحميل
-                    .error(R.drawable.error_a) // الصورة المعروضة في حالة حدوث خطأ أثناء التحميل
-                    .format(DecodeFormat.PREFER_RGB_565)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(true)
-                Glide.with(con)
-                    .asBitmap() // تحميل الصورة كـ Bitmap
-                    .load(current_imgModel.image_url)
-                    .apply(requestOptions)
+            val current_imgModel = fav_img_list[position]
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.ic_baseline_autorenew_24)
+                .error(R.drawable.error_a)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
 
-                    .circleCrop()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(binding.imgadapterImgViewContent)
+            Glide.with(con)
+                .asBitmap()
+                .load(current_imgModel.image_url)
+                .apply(requestOptions)
+                .centerCrop()
+                .into(binding.imgadapterImgViewContent)
+
 
 
         }

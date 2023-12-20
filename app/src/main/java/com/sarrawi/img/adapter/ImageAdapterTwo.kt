@@ -47,9 +47,9 @@ class ImageAdapterTwo(val con:Context) : ListAdapter<ImgsModel, ImageAdapterTwo.
 
                 }
 
-                binding.imgFave.setOnClickListener {
-                    onbtnClick?.invoke(imgList[position], position)
-                }
+//                binding.imgFave.setOnClickListener {
+//                    onbtnClick?.invoke(imgList[position], position)
+//                }
 
             }
             else{
@@ -59,10 +59,10 @@ class ImageAdapterTwo(val con:Context) : ListAdapter<ImgsModel, ImageAdapterTwo.
                     snackbar.show()
                 }
 
-                binding.imgFave.setOnClickListener {
-                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                    snackbar.show()
-                }
+//                binding.imgFave.setOnClickListener {
+//                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
+//                    snackbar.show()
+//                }
 
             }
         }
@@ -93,11 +93,11 @@ class ImageAdapterTwo(val con:Context) : ListAdapter<ImgsModel, ImageAdapterTwo.
 
 
                 binding.apply {
-                    if(current_imgModel.is_fav){
-                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
-                    }else{
-                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
-                    }
+//                    if(current_imgModel.is_fav){
+//                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
+//                    }else{
+//                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
+//                    }
 
                 }
             } else {

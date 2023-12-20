@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#1f1f1d"
 
-    tools:context=".ui.frag.SplashScreenFragment">
+    tools:context=".ui.frag.FirstFragment">
 
 
     <ImageView

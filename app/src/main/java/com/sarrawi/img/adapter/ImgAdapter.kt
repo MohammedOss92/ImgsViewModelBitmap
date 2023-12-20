@@ -43,9 +43,9 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
 
                 }
 
-                binding.imgFave.setOnClickListener {
-                    onbtnClick?.invoke(img_list[position], position)
-                }
+//                binding.imgFave.setOnClickListener {
+//                    onbtnClick?.invoke(img_list[position], position)
+//                }
 
             }
             else{
@@ -55,10 +55,10 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
                         snackbar.show()
                     }
 
-                    binding.imgFave.setOnClickListener {
-                        val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                        snackbar.show()
-                 }
+//                    binding.imgFave.setOnClickListener {
+//                        val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
+//                        snackbar.show()
+//                 }
 
                 }
             }
@@ -74,25 +74,24 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
                     .error(R.drawable.error_a)
                     .format(DecodeFormat.PREFER_RGB_565)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(false)
+                    .skipMemoryCache(true)
 
                 Glide.with(con)
-                    .asBitmap() // تحميل الصورة كـ Bitmap
+                    .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .circleCrop()
                     .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imgadapterImgViewContent)
 
 
 
+
                 binding.apply {
-                    if(current_imgModel.is_fav){
-                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
-                    }else{
-                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
-                    }
+//                    if(current_imgModel.is_fav){
+//                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
+//                    }else{
+//                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
+//                    }
 
                 }
             } else {

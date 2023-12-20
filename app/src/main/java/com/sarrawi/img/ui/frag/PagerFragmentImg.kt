@@ -119,7 +119,7 @@ class PagerFragmentImg : Fragment() {
 
         setUpViewPager()
         adapterOnClick()
-        binding.adView.loadAd(AdRequest.Builder().build())
+//        binding.adView.loadAd(AdRequest.Builder().build())
 //        adapterpager.onSaveImageClickListenerp = object : ViewPagerAdapter.OnSaveImageClickListenerp {
 //            override fun onSaveImageClickp(position: Int) {
 //                saveImageToExternalStorage(position)

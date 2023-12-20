@@ -35,14 +35,14 @@ class Paging_Fav_Adapter(val con: Context):PagingDataAdapter<FavoriteImage,Pagin
                 }
             }
 
-            binding.imgFave.setOnClickListener {
-                val position = bindingAdapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    getItem(position)?.let { item ->
-                        onbtnclick?.invoke(item)
-                    }
-                }
-            }
+//            binding.imgFave.setOnClickListener {
+//                val position = bindingAdapterPosition
+//                if (position != RecyclerView.NO_POSITION) {
+//                    getItem(position)?.let { item ->
+//                        onbtnclick?.invoke(item)
+//                    }
+//                }
+//            }
         }
 
         fun bind(item:FavoriteImage?) {

@@ -24,7 +24,7 @@
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/Img_webService_android2aa/app/src/main/res/layout/types_design_2.xml" value="0.22780797101449277" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/activity_main.xml" value="0.185546875" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/content_main.xml" value="0.184765625" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/fav_adapter_pager.xml" value="0.184765625" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/fav_adapter_pager.xml" value="0.1" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/fragment_fav_lin_recy.xml" value="0.185546875" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/fragment_favorite_pager.xml" value="0.184765625" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-large/fragment_favorite_recy.xml" value="0.18581907090464547" />
@@ -48,29 +48,31 @@
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/fragment_second.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/fragment_splash_screen.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/fragment_third.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/img_design.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/img_design.xml" value="0.1" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/img_designfav.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/img_pager.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-normal/row_images.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout-small/activity_main.xml" value="0.7949790794979079" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/activity_main.xml" value="0.12031408308004053" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/activity_main.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/content_main.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fav_adapter_pager.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_fav_lin_recy.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_favorite_pager.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_favorite_recy.xml" value="0.6509695290858726" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_favorite_recy.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_first.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_four.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_pager_img.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_second.xml" value="0.6509695290858726" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_pager_img.xml" value="0.22846441947565543" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_second.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_splash_screen.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/fragment_third.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/imagedea.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_design.xml" value="0.72" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_designfav.xml" value="0.24739583333333334" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_pager.xml" value="0.7949790794979079" />
-        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/row_images.xml" value="0.6509695290858726" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_design.xml" value="0.1" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_designfav.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/img_pager.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/row_images.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/rowimagefav.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/types_design.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/layout/types_design_2.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/ImgsViewModelBitmap/app/src/main/res/xml/provider_paths.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/favvvvv1/app/src/main/res/layout-normal/img_design.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/Abdallah/AndroidStudioProjects/favvvvv1/app/src/main/res/layout-normal/img_pager.xml" value="0.24739583333333334" />

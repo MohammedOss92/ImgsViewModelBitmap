@@ -53,7 +53,7 @@ class FavAdapterLinRecy(val con: Context):
         var adView: AdView?=null
 
         init {
-            adView= itemView.findViewById(R.id.adVieww)
+
             binding.root.setOnClickListener {
                 //اذا كانت null سيتم استخدام 0؟
 //                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, layoutPosition ?: 0)
@@ -71,22 +71,21 @@ class FavAdapterLinRecy(val con: Context):
 
         fun bind(position: Int) {
 
-                val current_imgModel = fav_img_list[position]
-                val requestOptions = RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_autorenew_24) // الصورة المؤقتة لحالة التحميل
-                    .error(R.drawable.error_a) // الصورة المعروضة في حالة حدوث خطأ أثناء التحميل
-                    .format(DecodeFormat.PREFER_RGB_565)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(true)
-                Glide.with(con)
-                    .asBitmap() // تحميل الصورة كـ Bitmap
-                    .load(current_imgModel.image_url)
-                    .apply(requestOptions)
-                    /*.override(targetWidth, targetHeight)*/
-                    .circleCrop()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(binding.imageView)
+            val current_imgModel = fav_img_list[position]
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.ic_baseline_autorenew_24)
+                .error(R.drawable.error_a)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
+
+            Glide.with(con)
+                .asBitmap()
+                .load(current_imgModel.image_url)
+                .apply(requestOptions)
+                .centerCrop()
+                .into(binding.imageView)
+
 
 
 
@@ -95,29 +94,29 @@ class FavAdapterLinRecy(val con: Context):
                 saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
             }
 
-            binding.share?.setOnClickListener {
-                // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
-
-                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
-                val bitmap: Bitmap = drawable.bitmap
-
-                val bitmapPath: String = MediaStore.Images.Media.insertImage(
-                    con.contentResolver,
-                    bitmap,
-                    "title",
-                    null
-                )
-
-                val uri: Uri = Uri.parse(bitmapPath)
-
-                val intent = Intent(Intent.ACTION_SEND)
-                intent.type = "image/png"
-                intent.putExtra(Intent.EXTRA_STREAM, uri)
-                intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
-
-                con.startActivity(Intent.createChooser(intent, "Share"))
-
-            }
+//            binding.share?.setOnClickListener {
+//                // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+//
+//                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+//                val bitmap: Bitmap = drawable.bitmap
+//
+//                val bitmapPath: String = MediaStore.Images.Media.insertImage(
+//                    con.contentResolver,
+//                    bitmap,
+//                    "title",
+//                    null
+//                )
+//
+//                val uri: Uri = Uri.parse(bitmapPath)
+//
+//                val intent = Intent(Intent.ACTION_SEND)
+//                intent.type = "image/png"
+//                intent.putExtra(Intent.EXTRA_STREAM, uri)
+//                intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+//
+//                con.startActivity(Intent.createChooser(intent, "Share"))
+//
+//            }
 
         }
 

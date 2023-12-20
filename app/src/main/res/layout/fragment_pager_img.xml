@@ -5,31 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    >ools:context=".ui.frag.PagerFragmentImg">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pagerimg"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layoutDirection="rtl"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-1895204889916566/4672546677"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pagerimg"
-         />
+        android:layoutDirection="rtl"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

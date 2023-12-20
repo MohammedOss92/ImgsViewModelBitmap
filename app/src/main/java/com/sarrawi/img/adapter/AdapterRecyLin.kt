@@ -55,7 +55,7 @@ class AdapterRecyLin(val con: Context):
     inner class ViewHolder(val binding:RowImagesBinding):RecyclerView.ViewHolder(binding.root) {
         var adView: AdView?=null
         init {
-            adView= itemView.findViewById(R.id.adView)
+
             if(isInternetConnected) {
                  binding.root.setOnClickListener {
                     onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
@@ -101,24 +101,20 @@ class AdapterRecyLin(val con: Context):
             val current_imgModel = img_list[position]
             if (isInternetConnected) {
 
-                val current_imgModel = img_list[position]
                 val requestOptions = RequestOptions()
                     .placeholder(R.drawable.ic_baseline_autorenew_24)
                     .error(R.drawable.error_a)
                     .format(DecodeFormat.PREFER_RGB_565)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(false)
+                    .skipMemoryCache(true)
 
                 Glide.with(con)
-                    .asBitmap() // تحميل الصورة كـ Bitmap
+                    .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-
-                    .circleCrop()
                     .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.imageView)
-                binding.lyNoInternet.visibility = View.GONE
+
 
 //            Glide.with(con)
 //                .load(current_imgModel.image_url)
@@ -137,29 +133,29 @@ class AdapterRecyLin(val con: Context):
 
             }
 
-                binding.share?.setOnClickListener {
-                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
-
-                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
-                    val bitmap: Bitmap = drawable.bitmap
-
-                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
-                        con.contentResolver,
-                        bitmap,
-                        "title",
-                        null
-                    )
-
-                    val uri: Uri = Uri.parse(bitmapPath)
-
-                    val intent = Intent(Intent.ACTION_SEND)
-                    intent.type = "image/png"
-                    intent.putExtra(Intent.EXTRA_STREAM, uri)
-                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
-
-                    con.startActivity(Intent.createChooser(intent, "Share"))
-
-                }
+//                binding.share?.setOnClickListener {
+//                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+//
+//                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+//                    val bitmap: Bitmap = drawable.bitmap
+//
+//                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
+//                        con.contentResolver,
+//                        bitmap,
+//                        "title",
+//                        null
+//                    )
+//
+//                    val uri: Uri = Uri.parse(bitmapPath)
+//
+//                    val intent = Intent(Intent.ACTION_SEND)
+//                    intent.type = "image/png"
+//                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+//                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+//
+//                    con.startActivity(Intent.createChooser(intent, "Share"))
+//
+//                }
 
             } else {
                 // عند عدم وجود اتصال بالإنترنت، قم بعرض الـ lyNoInternet بدلاً من الصورة
@@ -172,29 +168,7 @@ class AdapterRecyLin(val con: Context):
 
 
 
-            binding.share?.setOnClickListener {
-                // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
 
-                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
-                val bitmap: Bitmap = drawable.bitmap
-
-                val bitmapPath: String = MediaStore.Images.Media.insertImage(
-                    con.contentResolver,
-                    bitmap,
-                    "title",
-                    null
-                )
-
-                val uri: Uri = Uri.parse(bitmapPath)
-
-                val intent = Intent(Intent.ACTION_SEND)
-                intent.type = "image/png"
-                intent.putExtra(Intent.EXTRA_STREAM, uri)
-                intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
-
-                con.startActivity(Intent.createChooser(intent, "Share"))
-
-            }
         }
     }
 
