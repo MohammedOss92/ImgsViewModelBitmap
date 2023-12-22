@@ -40,8 +40,12 @@ import com.sarrawi.img.model.ImgsModel
 import java.io.File
 import java.io.FileOutputStream
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.sarrawi.img.paging.PagingAdapterImageLinear
 
 
@@ -132,7 +136,7 @@ class FourFragment : Fragment() {
 
             if (isConnected) {
 //                  setUpViewPager()
-
+                InterstitialAd_fun()
                 setUpRv()
                 adapterOnClick2()
                 adapterLinRecy.updateInternetStatus(isConnected)
@@ -320,6 +324,33 @@ class FourFragment : Fragment() {
     }
 
 
+    fun InterstitialAd_fun (){
+
+
+        MobileAds.initialize(requireActivity()) { initializationStatus ->
+            // do nothing on initialization complete
+        }
+
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(
+            requireActivity(),
+            "ca-app-pub-1895204889916566/2401606550",
+            adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    // The mInterstitialAd reference will be null until an ad is loaded.
+                    mInterstitialAd = interstitialAd
+                    Log.i("onAdLoadedL", "onAdLoaded")
+                }
+
+                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                    // Handle the error
+                    Log.d("onAdLoadedF", loadAdError.toString())
+                    mInterstitialAd = null
+                }
+            }
+        )
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_fragment_four, menu)
