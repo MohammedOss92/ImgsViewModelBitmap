@@ -40,6 +40,8 @@ import com.sarrawi.img.model.ImgsModel
 import java.io.File
 import java.io.FileOutputStream
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.sarrawi.img.paging.PagingAdapterImageLinear
 
 
@@ -88,7 +90,9 @@ class FourFragment : Fragment() {
     private var newimage: Int = -1
     private lateinit var imageUrl: String
     var imgsmodel: ImgsModel? = null // تهيئة المتغير كاختياري مع قيمة ابتدائية
-
+    var clickCount = 0
+    var mInterstitialAd: InterstitialAd?=null
+    private lateinit var adView: AdView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -283,6 +287,17 @@ class FourFragment : Fragment() {
         adapterLinRecy.onItemClick = { _, imgModel: ImgsModel, currentItemId ->
 
             if (imgsViewmodel.isConnected.value == true) {
+                clickCount++
+                if (clickCount >= 2) {
+// بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
+                    if (mInterstitialAd != null) {
+                        mInterstitialAd?.show(requireActivity())
+                    } else {
+                        Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                    }
+                    clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+
+                }
                 val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(
                     ID,
                     currentItemId,
@@ -298,70 +313,10 @@ class FourFragment : Fragment() {
                 snackbar.show()
             }
 
-            val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(
-                ID,
-                currentItemId,
-                imgModel.image_url
-            )
-            findNavController().navigate(directions)
+
 
         }
 
-    }
-
-    fun adapterOnClick() {
-        adapterLinRecy.onItemClick = { _, imgModel: ImgsModel, currentItemId ->
-//            if (imgsViewModel.isConnected.value == true) {
-
-//            clickCount++
-//            if (clickCount >= 2) {
-//                // بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
-//                if (mInterstitialAd != null) {
-//                    mInterstitialAd?.show(requireActivity())
-//                } else {
-//                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-//                }
-//                clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
-//
-//            }
-
-
-            val directions = ThirdFragmentDirections.actionToFourFragment(ID, currentItemId, imgModel.image_url)
-            findNavController().navigate(directions)
-        }
-//        else {
-//                val snackbar = Snackbar.make(
-//                    requireView(),
-//                    "لا يوجد اتصال بالإنترنت",
-//                    Snackbar.LENGTH_SHORT
-//                )
-//                snackbar.show()
-//            }
-
-
-        adapterLinRecy.onbtnClick = { it: ImgsModel, i: Int ->
-            if (it.is_fav) {
-                // إذا كانت الصورة مفضلة، قم بإلغاء الإعجاب بها
-                it.is_fav = false
-                imgsffav.removeFavoriteImage(FavoriteImage(it.id!!, it.ID_Type_id, it.new_img, it.image_url))
-                imgsffav.updateImages()
-                imgsffav.getFavByIDModels(it.id!!)
-                val snackbar = Snackbar.make(view!!, "تم الحذف", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            } else {
-                // إذا لم تكن الصورة مفضلة، قم بإضافتها للمفضلة
-                it.is_fav = true
-                imgsffav.addFavoriteImage(FavoriteImage(it.id!!, it.ID_Type_id, it.new_img, it.image_url))
-                imgsffav.updateImages()
-                imgsffav.getFavByIDModels(it.id!!)
-                val snackbar = Snackbar.make(view!!, "تم الإضافة", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            }
-            // تحقق من قيمة it.is_fav
-            println("it.is_fav: ${it.is_fav}")
-            // تحديث RecyclerView Adapter
-            adapterLinRecy.notifyDataSetChanged()
-        }
     }
 
 

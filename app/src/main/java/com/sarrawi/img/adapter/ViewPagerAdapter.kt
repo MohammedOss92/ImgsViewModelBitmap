@@ -45,22 +45,22 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
         init {
             if(isInternetConnected) {
-                binding.imgFavepager.setOnClickListener {
+                binding.imgFave.setOnClickListener {
                     onbtnClick?.invoke(img_list_Pager[position], position)
                 }
 
-                binding.saveImgpager.setOnClickListener {
+                binding.saveImg.setOnClickListener {
 //                    onSaveImageClickListenerp?.onSaveImageClickp(adapterPosition)
-                    saveBitmapToExternalStorage((binding.imageViewpager.drawable as BitmapDrawable).bitmap)
+                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
                 }
             }
             else{
 
-                binding.imgFavepager.setOnClickListener {
+                binding.imgFave.setOnClickListener {
                     val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
                     snackbar.show()                }
 
-                binding.saveImgpager.setOnClickListener {
+                binding.saveImg.setOnClickListener {
                     val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
                     snackbar.show()                }
 
@@ -93,7 +93,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
                     .centerCrop()
-                    .into(binding.imageViewpager)
+                    .into(binding.imageView)
 
                 binding.lyNoInternet.visibility = View.GONE
 
@@ -105,9 +105,9 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
                 binding.apply {
                     if(current_imgModel.is_fav){
-                        imgFavepager.setImageResource(R.drawable.baseline_favorite_true)
+                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
                     }else{
-                        imgFavepager.setImageResource(R.drawable.baseline_favorite_border_false)
+                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
                     }
 
                 }
@@ -139,8 +139,8 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                 // عند عدم وجود اتصال بالإنترنت، قم بعرض الـ lyNoInternet بدلاً من الصورة
                 Glide.with(con)
                     .load(R.drawable.nonet) // تحميل صورة nonet.jpg
-                    .into(binding.imageViewpager)
-                binding.imageViewpager.visibility = View.GONE
+                    .into(binding.imageView)
+                binding.imageView.visibility = View.GONE
                 binding.lyNoInternet.visibility = View.VISIBLE
             }
 

@@ -48,11 +48,7 @@ class ThirdFragment : Fragment() {
     private val imgAdapter by lazy { ImgAdapter(requireActivity()) }
     private val imgAdaptert by lazy { PagingAdapterImage(requireActivity()) }
     private var ID = -1
-    private var startIndex = -1
-    private val itemsPerPage = 10
-    private var isFetching = false
-    private var totalItemsLoaded = 0
-    private val startPage = 1
+
 
     lateinit var image_url:String
     private var recyclerViewState: Parcelable? = null

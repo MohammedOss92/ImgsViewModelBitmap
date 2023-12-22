@@ -41,7 +41,7 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 
 
         init {
-            binding.imgFavepager.setOnClickListener {
+            binding.imgFave.setOnClickListener {
 //                onbtnclick?.invoke(fav_img_list[adapterPosition])
                 onbtnclick?.invoke(fav_img_list_pager[bindingAdapterPosition])
 
@@ -63,12 +63,12 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
                 .load(current_imgModel.image_url)
                 .apply(requestOptions)
                 .centerCrop()
-                .into(binding.imageViewpager)
+                .into(binding.imageView)
 
 
-            binding.saveImgpager.setOnClickListener {
+            binding.saveImg.setOnClickListener {
 //                onSaveImageClickListenerfp?.onSaveImageClickfp(adapterPosition)
-                saveBitmapToExternalStorage((binding.imageViewpager.drawable as BitmapDrawable).bitmap)
+                saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
             }
 
 //            binding.share?.setOnClickListener {

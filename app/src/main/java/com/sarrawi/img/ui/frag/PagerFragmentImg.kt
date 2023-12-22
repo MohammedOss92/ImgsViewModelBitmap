@@ -21,6 +21,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.Api.ApiService
 import com.sarrawi.img.adapter.FavAdapterPager
@@ -74,6 +76,8 @@ class PagerFragmentImg : Fragment() {
     private var currentItemId = -1
     private var ID = -1
     var imgsmodel: ImgsModel? = null
+
+    private lateinit var adView: AdView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
