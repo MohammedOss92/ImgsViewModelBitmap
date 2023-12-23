@@ -92,7 +92,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .centerCrop()
+
                     .into(binding.imageView)
 
                 binding.lyNoInternet.visibility = View.GONE

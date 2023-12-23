@@ -62,7 +62,7 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
                 .asBitmap()
                 .load(current_imgModel.image_url)
                 .apply(requestOptions)
-                .centerCrop()
+
                 .into(binding.imageView)
 
 

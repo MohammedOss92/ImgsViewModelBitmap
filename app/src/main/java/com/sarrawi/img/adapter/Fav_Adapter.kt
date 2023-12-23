@@ -60,7 +60,7 @@ class Fav_Adapter(val con: Context): RecyclerView.Adapter<Fav_Adapter.ViewHolder
                 .asBitmap()
                 .load(current_imgModel.image_url)
                 .apply(requestOptions)
-                .centerCrop()
+
                 .into(binding.imgadapterImgViewContent)
 
 

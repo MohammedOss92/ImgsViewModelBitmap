@@ -80,7 +80,7 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
                     .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .centerCrop()
+
                     .into(binding.imgadapterImgViewContent)
 
 

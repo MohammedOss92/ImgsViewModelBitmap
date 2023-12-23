@@ -112,7 +112,7 @@ class AdapterRecyLin(val con: Context):
                     .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-                    .centerCrop()
+
                     .into(binding.imageView)
 
 

@@ -83,7 +83,7 @@ class FavAdapterLinRecy(val con: Context):
                 .asBitmap()
                 .load(current_imgModel.image_url)
                 .apply(requestOptions)
-                .centerCrop()
+
                 .into(binding.imageView)
 
 
