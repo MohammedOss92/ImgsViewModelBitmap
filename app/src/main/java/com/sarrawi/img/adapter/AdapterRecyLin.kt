@@ -52,7 +52,7 @@ class AdapterRecyLin(val con: Context):
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
 
-    inner class ViewHolder(val binding:RowImagesBinding):RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: RowImagesBinding):RecyclerView.ViewHolder(binding.root) {
         var adView: AdView?=null
         init {
 

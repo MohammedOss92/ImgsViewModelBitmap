@@ -14,17 +14,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/card1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:cardCornerRadius="8dp"-->
+<!--        app:cardElevation="8dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
 
 
@@ -36,7 +36,7 @@
             android:src="@drawable/android"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/aa"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.5"
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lyNoInternet"
-            app:layout_constraintBottom_toBottomOf="@+id/imgadapter_ImgViewContent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
             android:gravity="center"
             android:orientation="vertical"
@@ -78,12 +78,13 @@
 
 
 
-    </com.google.android.material.card.MaterialCardView>
+<!--    </com.google.android.material.card.MaterialCardView>-->
     <LinearLayout
+        android:id="@+id/aa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/card1"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center">
