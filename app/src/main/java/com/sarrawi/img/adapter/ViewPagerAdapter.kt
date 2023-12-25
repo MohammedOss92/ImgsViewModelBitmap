@@ -2,6 +2,7 @@ package com.sarrawi.img.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -49,20 +51,11 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     onbtnClick?.invoke(img_list_Pager[position], position)
                 }
 
-                binding.saveImg.setOnClickListener {
-//                    onSaveImageClickListenerp?.onSaveImageClickp(adapterPosition)
-                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
-                }
+
             }
             else{
 
-                binding.imgFave.setOnClickListener {
-                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                    snackbar.show()                }
 
-                binding.saveImg.setOnClickListener {
-                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                    snackbar.show()                }
 
                 binding.root.setOnClickListener{
 //                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
@@ -80,6 +73,8 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
         fun bind(position: Int, isInternetConnected: Boolean) {
             if (isInternetConnected) {
+
+
                 val current_imgModel = img_list_Pager[position]
                 val requestOptions = RequestOptions()
                     .placeholder(R.drawable.ic_baseline_autorenew_24)
@@ -97,10 +92,6 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
                 binding.lyNoInternet.visibility = View.GONE
 
-
-
-
-
                 binding.lyNoInternet.visibility = View.GONE
 
                 binding.apply {
@@ -109,6 +100,116 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     }else{
                         imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
                     }
+
+                }
+
+                binding.saveImg.setOnClickListener {
+//                    onSaveImageClickListenerp?.onSaveImageClickp(adapterPosition)
+                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
+                }
+
+                binding.whatsapp.setOnClickListener {
+                    val whatsappPackage = "com.whatsapp"
+
+// التحقق مما إذا كان تطبيق WhatsApp مثبتًا
+                    if (isAppInstalled(con, whatsappPackage)) {
+                        // تمثيل الصورة
+                        val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                        val bitmap: Bitmap = drawable.bitmap
+
+                        // حفظ الصورة في التخزين الخارجي
+                        val file = File(con.externalCacheDir, "image.png")
+                        val outputStream = FileOutputStream(file)
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                        outputStream.flush()
+                        outputStream.close()
+
+                        // إنشاء Uri للصورة المحفوظة
+                        val uri: Uri = FileProvider.getUriForFile(con, con.packageName + ".provider", file)
+
+                        // إنشاء Intent لمشاركة الصورة عبر WhatsApp
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "image/*"
+                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+                        intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                        // تحديد اسم الحزمة لتحديد تطبيق WhatsApp
+                        intent.setPackage(whatsappPackage)
+
+                        // ضبط العلامات لمنح أذونات القراءة لتطبيق WhatsApp
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                        // بدء النشاط
+                        con.startActivity(intent)
+                    } else {
+                        // إذا لم يكن WhatsApp مثبتًا، عرض Snackbar
+                        Snackbar.make(binding.root, "يجب تثبيت تطبيق WhatsApp", Snackbar.LENGTH_SHORT).show()
+                    }
+
+
+
+                }
+
+                binding.messenger.setOnClickListener {
+                    val messengerPackage = "com.facebook.orca" // حزمة تطبيق Facebook Messenger
+
+// التحقق مما إذا كان Facebook Messenger مثبت
+                    if (isAppInstalled(con, messengerPackage)) {
+                        // تمثيل الصورة
+                        val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                        val bitmap: Bitmap = drawable.bitmap
+
+                        // حفظ الصورة في التخزين الخارجي
+                        val file = File(con.externalCacheDir, "image.png")
+                        val outputStream = FileOutputStream(file)
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                        outputStream.flush()
+                        outputStream.close()
+
+                        // إنشاء Uri للصورة المحفوظة
+                        val uri: Uri = FileProvider.getUriForFile(con, con.packageName + ".provider", file)
+
+                        // إنشاء Intent لمشاركة الصورة عبر Facebook Messenger
+                        val messengerIntent = Intent(Intent.ACTION_SEND)
+                        messengerIntent.type = "image/*"
+                        messengerIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                        messengerIntent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+                        messengerIntent.setPackage(messengerPackage)
+                        messengerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                        // بدء النشاط
+                        con.startActivity(messengerIntent)
+                    } else {
+                        // إذا لم يكن Facebook Messenger مثبتًا، عرض Snackbar
+                        Snackbar.make(binding.root, "يجب تثبيت تطبيق Facebook Messenger", Snackbar.LENGTH_SHORT).show()
+                    }
+
+                }
+
+
+                binding.imgShare?.setOnClickListener {
+                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+
+
+
+                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
+
+                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                        con.contentResolver,
+                        bitmap,
+                        "title",
+                        null
+                    )
+
+                    val uri: Uri = Uri.parse(bitmapPath)
+
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "image/png"
+                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                    con.startActivity(Intent.createChooser(intent, "Share"))
 
                 }
 
@@ -142,6 +243,11 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     .into(binding.imageView)
                 binding.imageView.visibility = View.GONE
                 binding.lyNoInternet.visibility = View.VISIBLE
+                binding.imgShare.visibility = View.GONE
+                binding.imgFave.visibility = View.GONE
+                binding.saveImg.visibility = View.GONE
+                binding.messenger.visibility = View.GONE
+                binding.whatsapp.visibility = View.GONE
             }
 
 
@@ -217,6 +323,16 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
         } catch (e: IOException) {
             e.printStackTrace()
             // يمكنك إدراج رسالة خطأ هنا إذا لزم الأمر
+        }
+    }
+
+    fun isAppInstalled(context: Context, packageName: String): Boolean {
+        return try {
+            val packageManager = context.packageManager
+            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
         }
     }
 
