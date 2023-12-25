@@ -1,7 +1,7 @@
 package com.sarrawi.img.adapter
 
-import android.Manifest
 import android.Manifest.permission.*
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -14,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,11 +26,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.RowImagesBinding
 import com.sarrawi.img.model.ImgsModel
@@ -57,37 +54,13 @@ class AdapterRecyLin(val con: Context):
         init {
 
             if(isInternetConnected) {
-                 binding.root.setOnClickListener {
-                    onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
-            }
 
-                binding.imgFave.setOnClickListener {
-                    onbtnClick?.invoke(img_list[position],position)
-                }
-//        onSaveImageClickListener?.onSaveImageClick(layoutPosition)
-                binding.saveImg.setOnClickListener {
-                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
-                }
 
 
 
                 }
         else{
-            binding.root.setOnClickListener{
-//                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
-                val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            }
 
-            binding.imgFave.setOnClickListener {
-                val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            }
-
-            binding.saveImg.setOnClickListener {
-                val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            }
 
         }
 
@@ -121,42 +94,87 @@ class AdapterRecyLin(val con: Context):
 //                .into(binding.imageView)
 
 
+                binding.root.setOnClickListener {
+                    onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
+                }
 
+                binding.imgFave.setOnClickListener {
+                    onbtnClick?.invoke(img_list[position],position)
+                }
+//        onSaveImageClickListener?.onSaveImageClick(layoutPosition)
+                binding.saveImg.setOnClickListener {
+                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
+                }
 
 
             binding.apply {
              if(current_imgModel.is_fav){
                 imgFave.setImageResource(R.drawable.baseline_favorite_true)
-             }else{
+             }
+
+             else{
                  imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
              }
 
             }
 
-//                binding.share?.setOnClickListener {
-//                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
-//
-//                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
-//                    val bitmap: Bitmap = drawable.bitmap
-//
-//                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
-//                        con.contentResolver,
-//                        bitmap,
-//                        "title",
-//                        null
-//                    )
-//
-//                    val uri: Uri = Uri.parse(bitmapPath)
-//
-//                    val intent = Intent(Intent.ACTION_SEND)
-//                    intent.type = "image/png"
-//                    intent.putExtra(Intent.EXTRA_STREAM, uri)
-//                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
-//
-//                    con.startActivity(Intent.createChooser(intent, "Share"))
-//
-//                }
+                binding.whatsapp.setOnClickListener {
+                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
 
+// حفظ الصورة في التخزين الخارجي
+                    val file = File(con.externalCacheDir, "image.png")
+                    val outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+
+// إنشاء Uri للصورة المحفوظة
+                    val uri: Uri = FileProvider.getUriForFile(con, con.packageName + ".provider", file)
+
+// إنشاء Intent لمشاركة الصورة عبر WhatsApp
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "image/*"
+                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+// تحديد اسم الحزمة لتحديد تطبيق WhatsApp
+                    intent.setPackage("com.whatsapp")
+
+// ضبط العلامات لمنح أذونات القراءة لتطبيق WhatsApp
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+// بدء النشاط
+                    con.startActivity(intent)
+
+                }
+
+
+                binding.imgShare?.setOnClickListener {
+                    // يفترض أن هذا الكود داخل نشاط أو خدمة أو أي كلاس يمتلك الوصول إلى context
+
+
+
+                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
+
+                    val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                        con.contentResolver,
+                        bitmap,
+                        "title",
+                        null
+                    )
+
+                    val uri: Uri = Uri.parse(bitmapPath)
+
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "image/png"
+                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+
+                    con.startActivity(Intent.createChooser(intent, "Share"))
+
+                }
             } else {
                 // عند عدم وجود اتصال بالإنترنت، قم بعرض الـ lyNoInternet بدلاً من الصورة
                 Glide.with(con)
@@ -164,6 +182,18 @@ class AdapterRecyLin(val con: Context):
                     .into(binding.imageView)
                 binding.imageView.visibility = View.GONE
                 binding.lyNoInternet.visibility = View.VISIBLE
+
+                binding.imgShare.visibility= View.GONE
+
+                binding.root.setOnClickListener{
+//                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
+                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
+                }
+
+                binding.imgFave.visibility= View.GONE
+
+                binding.saveImg.visibility= View.GONE
             }
 
 
