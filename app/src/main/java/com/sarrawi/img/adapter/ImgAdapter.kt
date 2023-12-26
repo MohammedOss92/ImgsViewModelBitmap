@@ -1,6 +1,7 @@
 package com.sarrawi.img.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,8 @@ import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.ImgDesignBinding
@@ -32,8 +35,11 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
     val targetWidth = screenWidth / 2 // على سبيل المثال، يمكنك تحديد العرض إلى نصف عرض الشاشة
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
-    inner class ViewHolder(val binding:ImgDesignBinding):RecyclerView.ViewHolder(binding.root) {
 
+    private var adCount = 4
+
+    inner class ViewHolder(val binding:ImgDesignBinding):RecyclerView.ViewHolder(binding.root) {
+        var adView: AdView?=null
         init {
             if(isInternetConnected) {
                 binding.root.setOnClickListener {
@@ -80,7 +86,7 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
                     .asBitmap()
                     .load(current_imgModel.image_url)
                     .apply(requestOptions)
-
+                    .circleCrop()
                     .into(binding.imgadapterImgViewContent)
 
 
@@ -104,6 +110,7 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
             }
 
 
+            adView= itemView.findViewById(R.id.adView)
 
         }
 
@@ -136,6 +143,11 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(position,isInternetConnected)
+        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
+            Log.d("AD_TAG", "Loading Ad at position $position")
+            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
+
+        }
     }
 
     override fun getItemCount(): Int {

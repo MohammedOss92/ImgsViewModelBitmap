@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.TypesDesign2Binding
 import com.sarrawi.img.databinding.TypesDesignBinding
@@ -39,9 +43,21 @@ class TypesAdapter_T (val con: Context): RecyclerView.Adapter<TypesAdapter_T.Vie
                 TextViewCateg.text=current_imgTypes.ImgTypes
 //                val drawable = ContextCompat.getDrawable(requireContext(), current_imgTypes.Pic)
 //                ImgViewCateg.setImageDrawable(drawable)
-                ImgViewCateg.setImageResource(current_imgTypes.Pic)
+//                ImgViewCateg.setImageResource(current_imgTypes.Pic)
 
             }
+
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.ic_baseline_autorenew_24)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
+            Glide.with(con)
+                .asBitmap()
+                .load(current_imgTypes.Pic)
+                .apply(requestOptions)
+
+                .into(binding.ImgViewCateg)
         }
     }
     private val diffCallback = object : DiffUtil.ItemCallback<Img_Types_model>(){
