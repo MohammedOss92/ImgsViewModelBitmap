@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048315554649",
+    "project_id": "myimage-93991",
+    "storage_bucket": "myimage-93991.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048315554649:android:f8d871178a2d2fc1023a48",
+        "android_client_info": {
+          "package_name": "com.sarrawi.img"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxHHeNkupKkGOxXwMYDnHNfanRp_m_urM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
