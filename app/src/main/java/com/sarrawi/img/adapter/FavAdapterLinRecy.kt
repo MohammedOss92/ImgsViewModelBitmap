@@ -70,6 +70,8 @@ class FavAdapterLinRecy(val con: Context):
 
             }
 
+            adView=itemView.findViewById(R.id.adViewfav)
+
         }
 
         fun bind(position: Int) {

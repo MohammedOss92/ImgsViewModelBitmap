@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.ImgPagerBinding
@@ -37,14 +40,14 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
     val displayMetrics = con.resources.displayMetrics
     val screenWidth = displayMetrics.widthPixels
     val screenHeight = displayMetrics.heightPixels
-
+    private var adCount = 4
     // قم بتحديد القيم المطلوبة للصورة
     val targetWidth = screenWidth / 2 // على سبيل المثال، يمكنك تحديد العرض إلى نصف عرض الشاشة
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
 
     inner class ViewHolder(val binding:ImgPagerBinding): RecyclerView.ViewHolder(binding.root){
-
+        var adView: AdView?=null
         init {
             if(isInternetConnected) {
                 binding.imgFave.setOnClickListener {
@@ -251,7 +254,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
             }
 
 
-
+            adView=itemView.findViewById(R.id.adViewpa)
 
         }
 
@@ -282,6 +285,11 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
     override fun onBindViewHolder(holder: ViewPagerAdapter.ViewHolder, position: Int) {
 
         holder.bind(position,isInternetConnected)
+        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
+            Log.d("AD_TAG", "Loading Ad at position $position")
+            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
+
+        }
 
     }
 

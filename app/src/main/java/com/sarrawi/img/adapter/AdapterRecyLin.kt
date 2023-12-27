@@ -54,19 +54,6 @@ class AdapterRecyLin(val con: Context):
         var adView: AdView?=null
         init {
 
-            if(isInternetConnected) {
-
-
-
-
-                }
-        else{
-
-
-        }
-
-
-
         }
 
 
@@ -246,7 +233,7 @@ class AdapterRecyLin(val con: Context):
             }
 
 
-
+            adView=itemView.findViewById(R.id.adViewlin)
 
         }
     }

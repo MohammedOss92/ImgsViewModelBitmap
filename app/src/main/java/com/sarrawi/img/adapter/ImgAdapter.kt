@@ -36,10 +36,9 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
 
-    private var adCount = 4
 
     inner class ViewHolder(val binding:ImgDesignBinding):RecyclerView.ViewHolder(binding.root) {
-        var adView: AdView?=null
+
         init {
             if(isInternetConnected) {
                 binding.root.setOnClickListener {
@@ -110,7 +109,6 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
             }
 
 
-            adView= itemView.findViewById(R.id.adView)
 
         }
 
@@ -143,11 +141,7 @@ class ImgAdapter(val con: Context): RecyclerView.Adapter<ImgAdapter.ViewHolder>(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bind(position,isInternetConnected)
-        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
-            Log.d("AD_TAG", "Loading Ad at position $position")
-            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
 
-        }
     }
 
     override fun getItemCount(): Int {

@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -19,6 +20,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.R
 import com.sarrawi.img.databinding.FavAdapterPagerBinding
@@ -35,13 +38,13 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
     val displayMetrics = con.resources.displayMetrics
     val screenWidth = displayMetrics.widthPixels
     val screenHeight = displayMetrics.heightPixels
-
+    private var adCount = 4
     // قم بتحديد القيم المطلوبة للصورة
     val targetWidth = screenWidth / 2 // على سبيل المثال، يمكنك تحديد العرض إلى نصف عرض الشاشة
     val targetHeight = screenHeight / 2 // على سبيل المثال، يمكنك تحديد الارتفاع إلى نصف ارتفاع الشاشة
 
     inner class ViewHolder(val binding:FavAdapterPagerBinding):RecyclerView.ViewHolder(binding.root) {
-
+        var adView: AdView?=null
 
         init {
             binding.imgFave.setOnClickListener {
@@ -202,6 +205,7 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 //                con.startActivity(Intent.createChooser(intent, "Share"))
 //
 //            }
+            adView=itemView.findViewById(R.id.adViewfpa)
         }
     }
 
@@ -229,6 +233,11 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(position)
+        if (position % adCount == 0) {  // تحقق مما إذا كانت هذه العنصر هي عنصر الإعلان
+            Log.d("AD_TAG", "Loading Ad at position $position")
+            holder.adView?.loadAd(AdRequest.Builder().build())  // تحميل الإعلان
+
+        }
     }
 
     override fun getItemCount(): Int {
