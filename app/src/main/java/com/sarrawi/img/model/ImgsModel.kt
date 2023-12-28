@@ -25,6 +25,8 @@ data class ImgsModel(
 
     var is_fav:Boolean = false
 
+//    var timestamp: Long? = System.currentTimeMillis()
+
 
 )
 

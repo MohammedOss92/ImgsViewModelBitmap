@@ -19,6 +19,9 @@ data class FavoriteImage(
     @ColumnInfo(name = "image_url")
     var image_url: String,
 
+    @ColumnInfo(name = "timestamp")
+    var timestamp: Long? = System.currentTimeMillis(),
+
 
     var is_fav:Boolean = true
 )

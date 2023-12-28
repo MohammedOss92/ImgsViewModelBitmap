@@ -23,7 +23,8 @@ interface FavoriteImageDao {
     @Query("SELECT * FROM favorite_images order by id desc ")
     fun getAllFavoritea(): LiveData<List<FavoriteImage>>
 
-    @Query("SELECT * FROM favorite_images order by id desc ")
+//    @Query("SELECT * FROM favorite_images order by id desc ")
+    @Query("SELECT * FROM favorite_images ORDER BY timestamp DESC ")
     fun getAllFavorite(): PagingSource<Int,FavoriteImage>
 
     @Query("SELECT * FROM favorite_images where id =:ID order by id desc ")

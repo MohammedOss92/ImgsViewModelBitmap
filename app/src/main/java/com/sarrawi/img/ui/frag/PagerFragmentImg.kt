@@ -16,6 +16,7 @@ import android.webkit.MimeTypeMap
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -135,17 +136,36 @@ class PagerFragmentImg : Fragment() {
         imgsViewmodel.viewModelScope.launch {
             imgsViewmodel.getAllImgsViewModel(ID).observe(requireActivity()) { imgs ->
                 // print data
-                if (imgs != null) {
-                    adapterpager.img_list_Pager=imgs
-                    binding.pagerimg.adapter =adapterpager
-                    binding.pagerimg.setCurrentItem(currentItemId,false) // set for selected item
-                    adapterpager.notifyDataSetChanged()
+                if (imgs.isEmpty()) {
+                    // قم بتحميل البيانات من الخادم إذا كانت القائمة فارغة
+                    imgsViewmodel.getAllImgsViewModel(ID)
+                } else {
+                    // إذا كانت هناك بيانات، قم بتحديث القائمة في الـ RecyclerView
 
+                    // هنا قم بالحصول على البيانات المفضلة المحفوظة محليًا من ViewModel
+                    favoriteImagesViewModel.getAllFava().observe(viewLifecycleOwner) { favoriteImages ->
+                        val allImages: List<ImgsModel> = imgs
+
+                        for (image in allImages) {
+                            val isFavorite = favoriteImages.any { it.id == image.id } // تحقق مما إذا كانت الصورة مفضلة
+                            image.is_fav = isFavorite // قم بتحديث حالة الصورة
+                        }
+
+                        if (imgs != null) {
+                            adapterpager.img_list_Pager=imgs
+                            binding.pagerimg.adapter =adapterpager
+                            binding.pagerimg.setCurrentItem(currentItemId,false) // set for selected item
+                            adapterpager.notifyDataSetChanged()
+
+                        }
+
+                        else {
+                            // No data
+                        }
+
+                    }
                 }
 
-                else {
-                    // No data
-                }
 
             }}
 

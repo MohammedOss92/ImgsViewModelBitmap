@@ -1,5 +1,6 @@
 package com.sarrawi.img.adapter
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -78,81 +79,64 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
             }
 
             binding.whatsapp.setOnClickListener {
-                val whatsappPackage = "com.whatsapp"
+                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                val bitmap: Bitmap = drawable.bitmap
 
-// التحقق مما إذا كان تطبيق WhatsApp مثبتًا
-                if (isAppInstalled(con, whatsappPackage)) {
-                    // تمثيل الصورة
-                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
-                    val bitmap: Bitmap = drawable.bitmap
+                val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                    con.contentResolver,
+                    bitmap,
+                    "title",
+                    null
+                )
 
-                    // حفظ الصورة في التخزين الخارجي
-                    val file = File(con.externalCacheDir, "image.png")
-                    val outputStream = FileOutputStream(file)
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                    outputStream.flush()
-                    outputStream.close()
+                val uri: Uri = Uri.parse(bitmapPath)
 
-                    // إنشاء Uri للصورة المحفوظة
-                    val uri: Uri = FileProvider.getUriForFile(con, con.packageName + ".provider", file)
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/png"
 
-                    // إنشاء Intent لمشاركة الصورة عبر WhatsApp
-                    val intent = Intent(Intent.ACTION_SEND)
-                    intent.type = "image/*"
-                    intent.putExtra(Intent.EXTRA_STREAM, uri)
-                    intent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
+                val whatsappIntent = Intent(Intent.ACTION_SEND)
+                whatsappIntent.type = "text/plain"
+                whatsappIntent.setPackage("com.whatsapp")
+                whatsappIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share")
+                try {
+                    con.startActivity(whatsappIntent)
+                } catch (ex: ActivityNotFoundException) {
+                    Snackbar.make(binding.root, "Whatsapp have not been installed.", Snackbar.LENGTH_SHORT).show()
 
-                    // تحديد اسم الحزمة لتحديد تطبيق WhatsApp
-                    intent.setPackage(whatsappPackage)
-
-                    // ضبط العلامات لمنح أذونات القراءة لتطبيق WhatsApp
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-                    // بدء النشاط
-                    con.startActivity(intent)
-                } else {
-                    // إذا لم يكن WhatsApp مثبتًا، عرض Snackbar
-                    Snackbar.make(binding.root, "يجب تثبيت تطبيق WhatsApp", Snackbar.LENGTH_SHORT).show()
                 }
-
-
 
             }
 
             binding.messenger.setOnClickListener {
-                val messengerPackage = "com.facebook.orca" // حزمة تطبيق Facebook Messenger
+                val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                val bitmap: Bitmap = drawable.bitmap
 
-// التحقق مما إذا كان Facebook Messenger مثبت
-                if (isAppInstalled(con, messengerPackage)) {
-                    // تمثيل الصورة
-                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
-                    val bitmap: Bitmap = drawable.bitmap
+                // حفظ الصورة في التخزين الخارجي
+                val file = File(con.externalCacheDir, "image.png")
+                val outputStream = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.flush()
+                outputStream.close()
 
-                    // حفظ الصورة في التخزين الخارجي
-                    val file = File(con.externalCacheDir, "image.png")
-                    val outputStream = FileOutputStream(file)
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                    outputStream.flush()
-                    outputStream.close()
+                // إنشاء Uri للصورة المحفوظة
+                val uri: Uri = Uri.fromFile(file)
 
-                    // إنشاء Uri للصورة المحفوظة
-                    val uri: Uri = FileProvider.getUriForFile(con, con.packageName + ".provider", file)
+                // إنشاء Intent لمشاركة الصورة عبر Facebook Messenger
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/png"
+                intent.putExtra(Intent.EXTRA_STREAM, uri)
+                intent.putExtra(Intent.EXTRA_TEXT, "النص الذي ترغب في مشاركته")
 
-                    // إنشاء Intent لمشاركة الصورة عبر Facebook Messenger
-                    val messengerIntent = Intent(Intent.ACTION_SEND)
-                    messengerIntent.type = "image/*"
-                    messengerIntent.putExtra(Intent.EXTRA_STREAM, uri)
-                    messengerIntent.putExtra(Intent.EXTRA_TEXT, "Playstore Link: https://play.google.com/store")
-                    messengerIntent.setPackage(messengerPackage)
-                    messengerIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                // تحديد اسم الحزمة لتحديد تطبيق Facebook Messenger
+                intent.setPackage("com.facebook.orca")
 
+                try {
                     // بدء النشاط
-                    con.startActivity(messengerIntent)
-                } else {
-                    // إذا لم يكن Facebook Messenger مثبتًا، عرض Snackbar
-                    Snackbar.make(binding.root, "يجب تثبيت تطبيق Facebook Messenger", Snackbar.LENGTH_SHORT).show()
+                    con.startActivity(Intent.createChooser(intent, "مشاركة عبر"))
+                } catch (ex: ActivityNotFoundException) {
+                    Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
                 }
-
             }
 
 
