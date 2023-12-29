@@ -98,6 +98,12 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
                 binding.lyNoInternet.visibility = View.GONE
 
+                if (current_imgModel.new_img == 0) {
+                    binding.newImg.setVisibility(View.INVISIBLE)
+                } else {
+                    binding.newImg.setVisibility(View.VISIBLE)
+                }
+
                 binding.apply {
                     if(current_imgModel.is_fav){
                         imgFave.setImageResource(R.drawable.baseline_favorite_true)
@@ -239,6 +245,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
 
             adView=itemView.findViewById(R.id.adViewpa)
+
 
         }
 

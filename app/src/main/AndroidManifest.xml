@@ -50,6 +50,7 @@
             android:resource="@xml/provider_paths" />
         </provider>
 
+
         <service android:name="com.sarrawi.img.firebase.FirebaseMessagingservice"
             android:exported="true">
 

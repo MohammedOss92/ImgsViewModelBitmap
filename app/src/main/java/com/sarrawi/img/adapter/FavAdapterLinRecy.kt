@@ -188,6 +188,12 @@ class FavAdapterLinRecy(val con: Context):
 
             }
 
+            if (current_imgModel.new_img == 0) {
+                binding.newImg.setVisibility(View.INVISIBLE)
+            } else {
+                binding.newImg.setVisibility(View.VISIBLE)
+            }
+
         }
 
     }

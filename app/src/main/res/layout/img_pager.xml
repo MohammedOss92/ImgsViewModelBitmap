@@ -50,12 +50,7 @@
             android:src="@drawable/ic_favorite"
             android:layout_margin="5dp"/>
 
-        <ImageView
-            android:id="@+id/imgShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_share"
-            android:layout_margin="5dp"/>
+
 
 
 
@@ -64,6 +59,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_save"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/imgShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_share"
             android:layout_margin="5dp"/>
 
         <ImageView
@@ -79,6 +81,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_mes"
             android:layout_margin="5dp"/>
+        <ImageView
+            android:id="@+id/new_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/new_img"
+            android:layout_margin="5dp"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

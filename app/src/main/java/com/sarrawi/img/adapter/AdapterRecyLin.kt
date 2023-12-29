@@ -95,14 +95,22 @@ class AdapterRecyLin(val con: Context):
                 }
 
 
-            binding.apply {
-             if(current_imgModel.is_fav){
-                imgFave.setImageResource(R.drawable.baseline_favorite_true)
-             }
 
-             else{
-                 imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
-             }
+
+            binding.apply {
+                if(current_imgModel.is_fav){
+                    imgFave.setImageResource(R.drawable.baseline_favorite_true)
+                }
+
+                else{
+                  imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
+                }
+
+                if (current_imgModel.new_img == 0) {
+                    newImg.setVisibility(View.INVISIBLE)
+                } else {
+                    newImg.setVisibility(View.VISIBLE)
+                }
 
             }
 
@@ -139,6 +147,30 @@ class AdapterRecyLin(val con: Context):
                 binding.messenger.setOnClickListener {
                     val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
                     val bitmap: Bitmap = drawable.bitmap
+                    val file = File(con.externalCacheDir, "image.png")
+                    val outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+                    val uri: Uri = Uri.fromFile(file)
+                    val facebookMessengerPackage = "com.facebook.orca"
+                    if (isAppInstalled(con, facebookMessengerPackage)) {
+                        val intent = Intent(Intent.ACTION_SEND)
+                        intent.type = "image/png"
+                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+                        intent.putExtra(Intent.EXTRA_TEXT, "النص الذي ترغب في مشاركته")
+                        intent.setPackage(facebookMessengerPackage)
+                        try {
+                            con.startActivity(Intent.createChooser(intent, "مشاركة عبر"))
+                        } catch (ex: ActivityNotFoundException) {
+                            Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Snackbar.make(binding.root, "يجب تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+                    }
+                /*
+                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
 
                     // حفظ الصورة في التخزين الخارجي
                     val file = File(con.externalCacheDir, "image.png")
@@ -165,6 +197,8 @@ class AdapterRecyLin(val con: Context):
                     } catch (ex: ActivityNotFoundException) {
                         Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
                     }
+
+ */
                 }
 
 
