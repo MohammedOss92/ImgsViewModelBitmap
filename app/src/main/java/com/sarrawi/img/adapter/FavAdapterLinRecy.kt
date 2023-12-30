@@ -131,34 +131,88 @@ class FavAdapterLinRecy(val con: Context):
             }
 
             binding.messenger.setOnClickListener {
-                val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+
+                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
                 val bitmap: Bitmap = drawable.bitmap
 
-                // حفظ الصورة في التخزين الخارجي
-                val file = File(con.externalCacheDir, "image.png")
-                val outputStream = FileOutputStream(file)
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                outputStream.flush()
-                outputStream.close()
+                val bitmapPath: String = MediaStore.Images.Media.insertImage(
+                    con.contentResolver,
+                    bitmap,
+                    "title",
+                    null
+                )
 
-                // إنشاء Uri للصورة المحفوظة
-                val uri: Uri = Uri.fromFile(file)
+                val uri: Uri = Uri.parse(bitmapPath)
 
-                // إنشاء Intent لمشاركة الصورة عبر Facebook Messenger
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.type = "image/png"
-                intent.putExtra(Intent.EXTRA_STREAM, uri)
-                intent.putExtra(Intent.EXTRA_TEXT, "النص الذي ترغب في مشاركته")
 
-                // تحديد اسم الحزمة لتحديد تطبيق Facebook Messenger
-                intent.setPackage("com.facebook.orca")
-
+                val whatsappIntent = Intent(Intent.ACTION_SEND)
+                whatsappIntent.type = "text/plain"
+                whatsappIntent.setPackage("com.facebook.orca")
+                whatsappIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                whatsappIntent.putExtra(Intent.EXTRA_TEXT, "The text you wanted to share")
                 try {
-                    // بدء النشاط
-                    con.startActivity(Intent.createChooser(intent, "مشاركة عبر"))
+                    con.startActivity(whatsappIntent)
                 } catch (ex: ActivityNotFoundException) {
                     Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+
                 }
+
+//                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+//                    val bitmap: Bitmap = drawable.bitmap
+//                    val file = File(con.externalCacheDir, "image.png")
+//                    val outputStream = FileOutputStream(file)
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+//                    outputStream.flush()
+//                    outputStream.close()
+//                    val uri: Uri = Uri.fromFile(file)
+//                    val facebookMessengerPackage = "com.facebook.orca"
+//                    if (isAppInstalled(con, facebookMessengerPackage)) {
+//                        val intent = Intent(Intent.ACTION_SEND)
+//                        intent.type = "image/png"
+//                        intent.putExtra(Intent.EXTRA_STREAM, uri)
+//                        intent.putExtra(Intent.EXTRA_TEXT, "النص الذي ترغب في مشاركته")
+//                        intent.setPackage(facebookMessengerPackage)
+//                        try {
+//                            con.startActivity(Intent.createChooser(intent, "مشاركة عبر"))
+//                        } catch (ex: ActivityNotFoundException) {
+//                            Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+//                        }
+//                    } else {
+//                        Snackbar.make(binding.root, "يجب تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+//                    }
+                /*
+                    val drawable: BitmapDrawable = binding.imageView.drawable as BitmapDrawable
+                    val bitmap: Bitmap = drawable.bitmap
+
+                    // حفظ الصورة في التخزين الخارجي
+                    val file = File(con.externalCacheDir, "image.png")
+                    val outputStream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                    outputStream.flush()
+                    outputStream.close()
+
+                    // إنشاء Uri للصورة المحفوظة
+                    val uri: Uri = Uri.fromFile(file)
+
+                    // إنشاء Intent لمشاركة الصورة عبر Facebook Messenger
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "image/png"
+                    intent.putExtra(Intent.EXTRA_STREAM, uri)
+                    intent.putExtra(Intent.EXTRA_TEXT, "النص الذي ترغب في مشاركته")
+
+                    // تحديد اسم الحزمة لتحديد تطبيق Facebook Messenger
+                    intent.setPackage("com.facebook.orca")
+
+                    try {
+                        // بدء النشاط
+                        con.startActivity(Intent.createChooser(intent, "مشاركة عبر"))
+                    } catch (ex: ActivityNotFoundException) {
+                        Snackbar.make(binding.root, "لم يتم تثبيت تطبيق Facebook Messenger.", Snackbar.LENGTH_SHORT).show()
+                    }
+
+ */
             }
 
 
