@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1048315554649",
-    "project_id": "myimage-93991",
-    "storage_bucket": "myimage-93991.appspot.com"
+    "project_number": "266363953808",
+    "project_id": "myimgnotif-524d4",
+    "storage_bucket": "myimgnotif-524d4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1048315554649:android:f8d871178a2d2fc1023a48",
+        "mobilesdk_app_id": "1:266363953808:android:18327d7b1bc6f1b976ae15",
         "android_client_info": {
           "package_name": "com.sarrawi.img"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDxHHeNkupKkGOxXwMYDnHNfanRp_m_urM"
+          "current_key": "AIzaSyChChZ9Kho2OJYCz36-Oxd1DMs2M18ePgk"
         }
       ],
       "services": {
