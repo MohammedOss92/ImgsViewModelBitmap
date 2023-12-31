@@ -82,9 +82,9 @@ class AdapterRecyLin(val con: Context):
 //                .into(binding.imageView)
 
 
-                binding.root.setOnClickListener {
-                    onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
-                }
+//                binding.root.setOnClickListener {
+//                    onItemClick?.invoke(img_list[layoutPosition].id ?: 0, img_list[layoutPosition], layoutPosition)
+//                }
 
                 binding.imgFave.setOnClickListener {
                     onbtnClick?.invoke(img_list[position],position)
@@ -267,11 +267,11 @@ class AdapterRecyLin(val con: Context):
 
                 binding.imgShare.visibility= View.GONE
 
-                binding.root.setOnClickListener{
-//                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
-                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
-                    snackbar.show()
-                }
+//                binding.root.setOnClickListener{
+////                        Toast.makeText(con,"ghghg",Toast.LENGTH_SHORT).show()
+//                    val snackbar = Snackbar.make(it,"لا يوجد اتصال بالإنترنت", Snackbar.LENGTH_SHORT)
+//                    snackbar.show()
+//                }
 
                 binding.imgFave.visibility= View.GONE
                 binding.whatsapp.visibility= View.GONE

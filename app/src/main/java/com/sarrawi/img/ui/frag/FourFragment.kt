@@ -207,33 +207,33 @@ class FourFragment : Fragment() {
                     }
                 }
 
-                adapterLinRecy.onItemClick = { _, imgModel: ImgsModel,currentItemId ->
-                    if (imgsViewmodel.isConnected.value == true) {
-
-//                        clickCount++
-//                        if (clickCount >= 2) {
-//// بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
-//                            if (mInterstitialAd != null) {
-//                                mInterstitialAd?.show(requireActivity())
-//                            } else {
-//                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
-//                            }
-//                            clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+//                adapterLinRecy.onItemClick = { _, imgModel: ImgsModel,currentItemId ->
+//                    if (imgsViewmodel.isConnected.value == true) {
 //
-//                        }
-
-                        val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(ID,currentItemId,imgModel.image_url)
-                        findNavController().navigate(directions)
-
-                    } else {
-                        val snackbar = Snackbar.make(
-                            requireView(),
-                            "لا يوجد اتصال بالإنترنت",
-                            Snackbar.LENGTH_SHORT
-                        )
-                        snackbar.show()
-                    }
-                }
+////                        clickCount++
+////                        if (clickCount >= 2) {
+////// بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
+////                            if (mInterstitialAd != null) {
+////                                mInterstitialAd?.show(requireActivity())
+////                            } else {
+////                                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+////                            }
+////                            clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+////
+////                        }
+//
+//                        val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(ID,currentItemId,imgModel.image_url)
+//                        findNavController().navigate(directions)
+//
+//                    } else {
+//                        val snackbar = Snackbar.make(
+//                            requireView(),
+//                            "لا يوجد اتصال بالإنترنت",
+//                            Snackbar.LENGTH_SHORT
+//                        )
+//                        snackbar.show()
+//                    }
+//                }
             }
         }
     }
@@ -288,38 +288,38 @@ class FourFragment : Fragment() {
             }
         }
 
-        adapterLinRecy.onItemClick = { _, imgModel: ImgsModel, currentItemId ->
-
-            if (imgsViewmodel.isConnected.value == true) {
-                clickCount++
-                if (clickCount >= 2) {
-// بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
-                    if (mInterstitialAd != null) {
-                        mInterstitialAd?.show(requireActivity())
-                    } else {
-                        Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                    }
-                    clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
-
-                }
-                val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(
-                    ID,
-                    currentItemId,
-                    imgModel.image_url
-                )
-                findNavController().navigate(directions)
-            } else {
-                val snackbar = Snackbar.make(
-                    requireView(),
-                    "لا يوجد اتصال بالإنترنت",
-                    Snackbar.LENGTH_SHORT
-                )
-                snackbar.show()
-            }
-
-
-
-        }
+//        adapterLinRecy.onItemClick = { _, imgModel: ImgsModel, currentItemId ->
+//
+//            if (imgsViewmodel.isConnected.value == true) {
+//                clickCount++
+//                if (clickCount >= 2) {
+//// بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
+//                    if (mInterstitialAd != null) {
+//                        mInterstitialAd?.show(requireActivity())
+//                    } else {
+//                        Log.d("TAG", "The interstitial ad wasn't ready yet.")
+//                    }
+//                    clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+//
+//                }
+//                val directions = FourFragmentDirections.actionFourFragmentToPagerFragmentImg(
+//                    ID,
+//                    currentItemId,
+//                    imgModel.image_url
+//                )
+//                findNavController().navigate(directions)
+//            } else {
+//                val snackbar = Snackbar.make(
+//                    requireView(),
+//                    "لا يوجد اتصال بالإنترنت",
+//                    Snackbar.LENGTH_SHORT
+//                )
+//                snackbar.show()
+//            }
+//
+//
+//
+//        }
 
     }
 

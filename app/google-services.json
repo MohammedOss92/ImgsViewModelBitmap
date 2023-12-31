@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "266363953808",
-    "project_id": "myimgnotif-524d4",
-    "storage_bucket": "myimgnotif-524d4.appspot.com"
+    "project_number": "578391053354",
+    "project_id": "python-fcm-msg",
+    "storage_bucket": "python-fcm-msg.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:266363953808:android:18327d7b1bc6f1b976ae15",
+        "mobilesdk_app_id": "1:578391053354:android:5892b397a7d464c0cddf53",
         "android_client_info": {
           "package_name": "com.sarrawi.img"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "578391053354-t28ls1snd7401pk7vuc3cid2uqmid7u5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyChChZ9Kho2OJYCz36-Oxd1DMs2M18ePgk"
+          "current_key": "AIzaSyASnAtFnuXf_QPJ5qZa8q6dXCfS7FEDVQs"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578391053354-t28ls1snd7401pk7vuc3cid2uqmid7u5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

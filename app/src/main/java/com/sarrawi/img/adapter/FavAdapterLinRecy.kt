@@ -58,13 +58,13 @@ class FavAdapterLinRecy(val con: Context):
 
         init {
 
-            binding.root.setOnClickListener {
-                //اذا كانت null سيتم استخدام 0؟
-//                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, layoutPosition ?: 0)
-//                onItemClick?.invoke(fav_img_list.getOrNull(layoutPosition)?.id ?: 0, layoutPosition ?: 0)
-                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, fav_img_list[layoutPosition], layoutPosition)
-
-            }
+//            binding.root.setOnClickListener {
+//                //اذا كانت null سيتم استخدام 0؟
+////                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, layoutPosition ?: 0)
+////                onItemClick?.invoke(fav_img_list.getOrNull(layoutPosition)?.id ?: 0, layoutPosition ?: 0)
+//                onItemClick?.invoke(fav_img_list[layoutPosition].id ?: 0, fav_img_list[layoutPosition], layoutPosition)
+//
+//            }
             binding.imgFave.setOnClickListener {
 //                onbtnclick?.invoke(fav_img_list[adapterPosition])
                 onbtnclick?.invoke(fav_img_list[bindingAdapterPosition])

@@ -147,23 +147,23 @@ class FavFragmentLinRecy : Fragment() {
             snackbar.show()
         }
 
-        favAdapterLinRecy.onItemClick={_, favimage: FavoriteImage, currentItemId ->
-
-            clickCount++
-            if (clickCount >= 2) {
-                // بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
-                if (mInterstitialAd != null) {
-                    mInterstitialAd?.show(requireActivity())
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
-                }
-                clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
-
-            }
-
-            val directions = FavFragmentLinRecyDirections.actionFavFragmentLinRecyToFavoritePagerFrag(ID, currentItemId,favimage.image_url)
-            findNavController().navigate(directions)
-        }
+//        favAdapterLinRecy.onItemClick={_, favimage: FavoriteImage, currentItemId ->
+//
+//            clickCount++
+//            if (clickCount >= 2) {
+//                // بمجرد أن يصل clickCount إلى 2، اعرض الإعلان
+//                if (mInterstitialAd != null) {
+//                    mInterstitialAd?.show(requireActivity())
+//                } else {
+//                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+//                }
+//                clickCount = 0 // اعيد قيمة المتغير clickCount إلى الصفر بعد عرض الإعلان
+//
+//            }
+//
+//            val directions = FavFragmentLinRecyDirections.actionFavFragmentLinRecyToFavoritePagerFrag(ID, currentItemId,favimage.image_url)
+//            findNavController().navigate(directions)
+//        }
 
     }
 

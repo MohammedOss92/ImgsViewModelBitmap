@@ -60,10 +60,6 @@
             android:name="imageUrl"
             app:argType="string" />
 
-        <action
-            android:id="@+id/action_fourFragment_to_pagerFragmentImg"
-            app:destination="@id/pagerFragmentImg" />
-
         <!--        <argument-->
 <!--            android:name="id"-->
 <!--            app:argType="integer" />-->
@@ -110,9 +106,6 @@
         <argument
             android:name="imageUrl"
             app:argType="string" />
-        <action
-            android:id="@+id/action_favFragmentLinRecy_to_favoritePagerFrag"
-            app:destination="@id/favoritePagerFrag" />
 
     </fragment>
     <fragment
@@ -176,9 +169,6 @@
             android:name="imageUrl"
             app:argType="string" />
 
-        <action
-            android:id="@+id/action_newImgFragLinear_to_newImgFragPager"
-            app:destination="@id/newImgFragPager" />
     </fragment>
     <fragment
         android:id="@+id/newImgFragPager"
