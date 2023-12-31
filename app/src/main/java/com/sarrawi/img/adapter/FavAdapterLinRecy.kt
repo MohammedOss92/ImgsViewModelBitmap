@@ -1,12 +1,17 @@
 package com.sarrawi.img.adapter
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
@@ -15,6 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -31,6 +37,7 @@ import com.sarrawi.img.databinding.ImgDesignfavBinding
 import com.sarrawi.img.databinding.RowImagesBinding
 import com.sarrawi.img.databinding.RowimagefavBinding
 import com.sarrawi.img.model.FavoriteImage
+import androidx.core.app.TaskStackBuilder
 
 import com.sarrawi.img.model.ImgsModel
 import java.io.File
@@ -297,7 +304,44 @@ class FavAdapterLinRecy(val con: Context):
     }
 
     // دالة لحفظ الصورة كملف في التخزين الخارجي
-    private fun saveBitmapToExternalStorage(bitmap: Bitmap) {
+//    private fun saveBitmapToExternalStorage(bitmap: Bitmap) {
+//        val fileName = "image_${System.currentTimeMillis()}.jpg"
+//
+//        try {
+//            // احصل على مسار التخزين الخارجي
+//            val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//
+//            // تأكد من أن المجلد موجود، إذا لم يكن، قم بإنشاء المجلد
+//            if (!imagesDir.exists()) {
+//                imagesDir.mkdirs()
+//            }
+//
+//            val imageFile = File(imagesDir, fileName)
+//            val outputStream = FileOutputStream(imageFile)
+//
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+//            outputStream.flush()
+//            outputStream.close()
+//
+//            // إعلام المستخدم بأن الصورة تم حفظها
+//            Toast.makeText(con, "تم حفظ الصورة", Toast.LENGTH_SHORT).show()
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//            // يمكنك إدراج رسالة خطأ هنا إذا لزم الأمر
+//        }
+//    }
+
+    fun isAppInstalled(context: Context, packageName: String): Boolean {
+        return try {
+            val packageManager = context.packageManager
+            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+    fun saveBitmapToExternalStorage(bitmap: Bitmap) {
         val fileName = "image_${System.currentTimeMillis()}.jpg"
 
         try {
@@ -317,22 +361,43 @@ class FavAdapterLinRecy(val con: Context):
             outputStream.close()
 
             // إعلام المستخدم بأن الصورة تم حفظها
-            Toast.makeText(con, "تم حفظ الصورة", Toast.LENGTH_SHORT).show()
+            showToast("تم حفظ الصورة")
+
+            // إظهار إشعار في لوحة الإشعارات باستخدام الصورة المحفوظة
+            showNotification("تم تنزيل الصورة", imageFile)
+
         } catch (e: IOException) {
             e.printStackTrace()
             // يمكنك إدراج رسالة خطأ هنا إذا لزم الأمر
         }
     }
 
-    fun isAppInstalled(context: Context, packageName: String): Boolean {
-        return try {
-            val packageManager = context.packageManager
-            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            true
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
+    fun showToast(message: String) {
+        Toast.makeText(con, message, Toast.LENGTH_SHORT).show()
     }
 
+    fun showNotification(title: String, imageFile: File) {
+        val channelId = "channel_id"
+        val notificationId = 1
+
+        // إنشاء قناة الإشعار إذا لم تكن موجودة (لإصدارات Android 8.0 فأعلى)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "Channel Name", NotificationManager.IMPORTANCE_DEFAULT)
+            val notificationManager = con.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // إعداد محتوى الإشعار باستخدام الصورة المحفوظة
+        val builder = NotificationCompat.Builder(con, channelId)
+            .setSmallIcon(R.drawable.iconn)
+            .setContentTitle(title)
+            .setContentText("تم تحميل الصورة بنجاح")
+            .setLargeIcon(BitmapFactory.decodeFile(imageFile.absolutePath))
+            .setAutoCancel(true)
+
+        // إرسال الإشعار
+        val notificationManager = con.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(notificationId, builder.build())
+    }
 
 }
