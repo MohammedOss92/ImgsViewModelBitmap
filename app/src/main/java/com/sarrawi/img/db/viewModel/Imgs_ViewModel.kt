@@ -59,7 +59,36 @@ private val _isConnected = MutableLiveData<Boolean>()
 
 
 
+    fun getAllImgsNewViewModel():LiveData<List<ImgsModel>> {
+        _isLoading.postValue(true) // عرض ProgressBar قبل بدء التحميل
 
+        val _response = MutableLiveData<List<ImgsModel>>()
+
+        viewModelScope.launch {
+            try{
+                val response = imgsRepo.getImgs_Repo_New()
+
+                if (response.isSuccessful) {
+                    val results = response.body()?.results
+                    _response.postValue(results)
+                    Log.i("TestRoom", "getAllImgs: posts $results")
+//                    imgsRepo.insert_imgs_repo(response.body()?.results)
+                } else {
+                    Log.i("TestRoom", "getAllImgs: data corrupted")
+                    Log.d("tag", "getAll Error: ${response.code()}")
+                    Log.d("tag", "getAll: ${response.body()}")
+                }
+            }
+            catch (e: Exception)
+            {
+                Log.e("TestRoom", "getAllImgs: Error: ${e.message}")
+            }
+            finally {
+                _isLoading.postValue(false) // إخفاء ProgressBar بعد انتهاء التحميل
+            }
+        }
+        return _response
+    }
 
 
     fun getAllImgsViewModel(ID_Type_id: Int): LiveData<List<ImgsModel>> {

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -27,16 +28,18 @@ class FirebaseMessagingservice : FirebaseMessagingService() {
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-
-        val title = remoteMessage.notification!!.title
-        val body = remoteMessage.notification!!.body
+        val title = remoteMessage.notification?.title
+        val body = remoteMessage.notification?.body
         val imgurl = remoteMessage.data["image"]
         val tag = remoteMessage.data["tag"]
+
+        Log.d("FCM", "Title: $title, Body: $body, Image URL: $imgurl, Tag: $tag")
+        Log.d("FCM", "Message received: ${remoteMessage.data}")
+
         bitmap = getbitmap(imgurl)
-
         getnotifiacation(bitmap?.let { it }, title?.let { it }, body?.let { it }, imgurl?.let { it })
-
     }
+
 
     override fun onNewToken(token: String) {
         // قم بتنفيذ العمليات المطلوبة هنا

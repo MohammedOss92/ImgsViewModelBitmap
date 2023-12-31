@@ -9,4 +9,9 @@
         android:id="@+id/favoriteFragmentRecy"
         android:icon="@drawable/ic_favorite"
         android:title="المفصلة" />
+
+    <item
+        android:id="@+id/newImgFragment"
+        android:icon="@drawable/new_img"
+        android:title="الجديده" />
 </menu>

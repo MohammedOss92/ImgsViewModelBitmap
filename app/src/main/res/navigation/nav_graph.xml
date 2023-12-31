@@ -149,6 +149,54 @@
             android:name="imageUrl"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/newImgFragment"
+        android:name="com.sarrawi.img.ui.newImg.NewImgFragment"
+        android:label="fragment_new_img"
+        tools:layout="@layout/fragment_new_img" >
+        <action
+            android:id="@+id/action_newImgFragment_to_newImgFragLinear"
+            app:destination="@id/newImgFragLinear" />
+    </fragment>
+    <fragment
+        android:id="@+id/newImgFragLinear"
+        android:name="com.sarrawi.img.ui.newImg.NewImgFragLinear"
+        android:label="fragment_new_img_frag_linear"
+        tools:layout="@layout/fragment_new_img_frag_linear" >
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+        <argument
+            android:name="currentItemId"
+            app:argType="integer" />
+
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_newImgFragLinear_to_newImgFragPager"
+            app:destination="@id/newImgFragPager" />
+    </fragment>
+    <fragment
+        android:id="@+id/newImgFragPager"
+        android:name="com.sarrawi.img.ui.newImg.NewImgFragPager"
+        android:label="fragment_new_img_frag_pager"
+        tools:layout="@layout/fragment_new_img_frag_pager" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+        <argument
+            android:name="currentItemId"
+            app:argType="integer" />
+
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

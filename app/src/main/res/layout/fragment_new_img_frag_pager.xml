@@ -8,7 +8,7 @@
     tools:context=".ui.frag.PagerFragmentImg">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pagerimg"
+        android:id="@+id/pagernewimg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"

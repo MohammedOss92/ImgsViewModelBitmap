@@ -30,6 +30,8 @@ class ImgRepository(val apiService: ApiService,app:Application) {
 
     suspend fun getImgs_Repo(ID_Type_id: Int) = apiService.getImgs_Ser(ID_Type_id)
 
+    suspend fun getImgs_Repo_New() = apiService.getImgsNew()
+
 //    suspend fun getImgs_Repo2(ID_Type_id: Int) = flow{
 //
 //        emit(DataStatus.loading())

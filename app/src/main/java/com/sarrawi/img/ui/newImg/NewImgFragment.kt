@@ -1,18 +1,15 @@
-package com.sarrawi.img.ui.frag
+package com.sarrawi.img.ui.newImg
 
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
@@ -23,23 +20,34 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.snackbar.Snackbar
 import com.sarrawi.img.Api.ApiService
+import com.sarrawi.img.R
 import com.sarrawi.img.adapter.AdItemDecoration
+import com.sarrawi.img.adapter.AdapterRecyLin
 import com.sarrawi.img.adapter.ImgAdapter
-import com.sarrawi.img.databinding.FragmentThirdBinding
+import com.sarrawi.img.databinding.FragmentFourBinding
+import com.sarrawi.img.databinding.FragmentNewImgBinding
 import com.sarrawi.img.db.repository.FavoriteImageRepository
 import com.sarrawi.img.db.repository.ImgRepository
-import com.sarrawi.img.db.viewModel.*
+import com.sarrawi.img.db.viewModel.FavoriteImagesViewModel
+import com.sarrawi.img.db.viewModel.Imgs_ViewModel
+import com.sarrawi.img.db.viewModel.ViewModelFactory
+import com.sarrawi.img.db.viewModel.ViewModelFactory2
 import com.sarrawi.img.model.FavoriteImage
 import com.sarrawi.img.model.ImgsModel
 import com.sarrawi.img.paging.PagingAdapterImage
+import com.sarrawi.img.paging.PagingAdapterImageLinear
+import com.sarrawi.img.ui.frag.ThirdFragmentDirections
 import com.sarrawi.img.utils.DataStatus
-import com.sarrawi.img.utils.isVisible
 import kotlinx.coroutines.launch
 
-class ThirdFragment : Fragment() {
 
-    private lateinit var _binding: FragmentThirdBinding
+class NewImgFragment : Fragment() {
+
+
+    private lateinit var _binding: FragmentNewImgBinding
+
     private val binding get() = _binding
+
     private val retrofitService = ApiService.provideRetrofitInstance()
     private val mainRepository by lazy { ImgRepository(retrofitService,requireActivity().application) }
     private val imgsViewModel: Imgs_ViewModel by viewModels {
@@ -72,17 +80,10 @@ class ThirdFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentThirdBinding.inflate(inflater, container, false)
+
+        _binding = FragmentNewImgBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         return binding.root
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ID = ThirdFragmentArgs.fromBundle(requireArguments()).id
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,42 +110,18 @@ class ThirdFragment : Fragment() {
         adapterOnClick()
 
         imgsViewModel.checkNetworkConnection(requireContext())
-
-//        imgsViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-//            if (isLoading) {
-//                binding.progressBar.visibility = View.VISIBLE
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//            }
-//        }
-
-
-
-
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-    }
-
-
-
 
 
     private fun setUpRv() {
         if (isAdded) {
-            imgsViewModel.getAllImgsViewModel(ID).observe(viewLifecycleOwner) { imgs ->
+            imgsViewModel.getAllImgsNewViewModel().observe(viewLifecycleOwner) { imgs ->
                 imgAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
                 val adItemDecoration = AdItemDecoration(adInterval = 4, adHeight = 50) // تحديد الفاصل بين الإعلانات وارتفاع الإعلان
-                binding.rvImgCont.addItemDecoration(adItemDecoration)
+                binding.rvImgNewcont.addItemDecoration(adItemDecoration)
                 if (imgs.isEmpty()) {
                     // قم بتحميل البيانات من الخادم إذا كانت القائمة فارغة
-                    imgsViewModel.getAllImgsViewModel(ID)
+                    imgsViewModel.getAllImgsNewViewModel()
                 } else {
                     // إذا كانت هناك بيانات، قم بتحديث القائمة في الـ RecyclerView
 
@@ -159,14 +136,14 @@ class ThirdFragment : Fragment() {
 
                         imgAdapter.img_list = allImages
 
-                        if (binding.rvImgCont.adapter == null) {
-                            binding.rvImgCont.layoutManager = GridLayoutManager(requireContext(),2)
-                            binding.rvImgCont.adapter = imgAdapter
+                        if (binding.rvImgNewcont.adapter == null) {
+                            binding.rvImgNewcont.layoutManager = GridLayoutManager(requireContext(),2)
+                            binding.rvImgNewcont.adapter = imgAdapter
                         } else {
                             imgAdapter.notifyDataSetChanged()
                         }
                         if (currentItemId != -1) {
-                            binding.rvImgCont.scrollToPosition(currentItemId)
+                            binding.rvImgNewcont.scrollToPosition(currentItemId)
                         }
 
 
@@ -189,7 +166,7 @@ class ThirdFragment : Fragment() {
 
                         }
 
-                        val directions = ThirdFragmentDirections.actionToFourFragment(ID, currentItemId,imgModel.image_url)
+                        val directions = NewImgFragmentDirections.actionNewImgFragmentToNewImgFragLinear(ID, currentItemId,imgModel.image_url)
                         findNavController().navigate(directions)
 
 
@@ -207,72 +184,7 @@ class ThirdFragment : Fragment() {
     }
 
 
-    private fun setUpRvth() {
-        if (isAdded) {
-        // تعيين المدير التخطيط (GridLayout) لـ RecyclerView أولاً
-            binding.rvImgCont.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // تعيين المحمل للـ RecyclerView بعد تعيين المدير التخطيط
-            binding.rvImgCont.adapter = imgAdaptert
-
-
-//            imgsViewModel.getImgsData(ID).observe(viewLifecycleOwner) {
-            imgsViewModel.getImgsData(ID).observe(viewLifecycleOwner) {
-
-              imgAdaptert.submitData(viewLifecycleOwner.lifecycle, it)
-              imgAdaptert.notifyDataSetChanged()
-
-//                favoriteImagesViewModel.getAllFav()
-//                    .observe(viewLifecycleOwner) { favoriteImages ->
-//                        val allImages: List<ImgsModel> = newImgs
-//                        for (image in allImages) {
-//                            val isFavorite =
-//                                favoriteImages.any { it.id == image.id } // تحقق مما إذا كانت الصورة مفضلة
-//                            image.is_fav = isFavorite // قم بتحديث حالة الصورة
-//                        }
-         }
-        // اختيار دالة التعيين وضبط السياسة لـ RecyclerView
-            imgAdaptert.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
-// بعد تحديث البيانات
-            binding.rvImgCont.scrollToPosition(0)
-
-    }
-}
-
-
-    private fun setUpRvtwo() {
-        if (isAdded) {
-            // تعيين المدير التخطيط (GridLayout) لـ RecyclerView أولاً
-            binding.rvImgCont.layoutManager = GridLayoutManager(requireContext(), 2)
-
-            // تعيين المحمل للـ RecyclerView بعد تعيين المدير التخطيط
-            binding.rvImgCont.adapter = imgAdapter
-            lifecycleScope.launch {
-                binding.apply {
-                    imgsViewModel.getImgs_viewmodel(ID)
-                    imgsViewModel.imgList.observe(viewLifecycleOwner){
-
-                        imgAdapter.img_list
-
-                        when(it.status){
-                            DataStatus.Status.LOADING->{
-//                                binding.progressBar.isVisible(true,rvImgCont)
-                            }
-                            DataStatus.Status.SUCCESS->{
-                                imgAdapter.differ.submitList(it.data)
-                            }
-                            DataStatus.Status.ERROR->{}
-
-                        }
-                    }
-                }
-            }
-
-
-            binding.rvImgCont.scrollToPosition(0)
-
-        }
-    }
 
 
 
@@ -293,7 +205,7 @@ class ThirdFragment : Fragment() {
                 }
 
 
-                val directions = ThirdFragmentDirections.actionToFourFragment(
+                val directions = NewImgFragmentDirections.actionNewImgFragmentToNewImgFragLinear(
                     ID,
                     currentItemId,
                     imgModel.image_url
@@ -307,32 +219,47 @@ class ThirdFragment : Fragment() {
                 )
                 snackbar.show()
             }
-        }
 
 
-        imgAdapter.onbtnClick = { it: ImgsModel, i: Int ->
-            if (it.is_fav) {
-                // إذا كانت الصورة مفضلة، قم بإلغاء الإعجاب بها
-                it.is_fav = false
-                imgsffav.removeFavoriteImage(FavoriteImage(it.id!!, it.ID_Type_id, it.new_img, it.image_url))
-                imgsffav.updateImages()
-                imgsffav.getFavByIDModels(it.id!!)
-                val snackbar = Snackbar.make(view!!, "تم الحذف", Snackbar.LENGTH_SHORT)
-                snackbar.show()
-            } else {
-                // إذا لم تكن الصورة مفضلة، قم بإضافتها للمفضلة
-                it.is_fav = true
-                imgsffav.addFavoriteImage(FavoriteImage(it.id!!, it.ID_Type_id, it.new_img, it.image_url))
-                imgsffav.updateImages()
-                imgsffav.getFavByIDModels(it.id!!)
-                val snackbar = Snackbar.make(view!!, "تم الإضافة", Snackbar.LENGTH_SHORT)
-                snackbar.show()
+            imgAdapter.onbtnClick = { it: ImgsModel, i: Int ->
+                if (it.is_fav) {
+                    // إذا كانت الصورة مفضلة، قم بإلغاء الإعجاب بها
+                    it.is_fav = false
+                    imgsffav.removeFavoriteImage(
+                        FavoriteImage(
+                            it.id!!,
+                            it.ID_Type_id,
+                            it.new_img,
+                            it.image_url
+                        )
+                    )
+                    imgsffav.updateImages()
+                    imgsffav.getFavByIDModels(it.id!!)
+                    val snackbar = Snackbar.make(view!!, "تم الحذف", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
+                } else {
+                    // إذا لم تكن الصورة مفضلة، قم بإضافتها للمفضلة
+                    it.is_fav = true
+                    imgsffav.addFavoriteImage(
+                        FavoriteImage(
+                            it.id!!,
+                            it.ID_Type_id,
+                            it.new_img,
+                            it.image_url
+                        )
+                    )
+                    imgsffav.updateImages()
+                    imgsffav.getFavByIDModels(it.id!!)
+                    val snackbar = Snackbar.make(view!!, "تم الإضافة", Snackbar.LENGTH_SHORT)
+                    snackbar.show()
+                }
+                // تحقق من قيمة it.is_fav
+                println("it.is_fav: ${it.is_fav}")
+                // تحديث RecyclerView Adapter
+                imgAdaptert.notifyDataSetChanged()
             }
-            // تحقق من قيمة it.is_fav
-            println("it.is_fav: ${it.is_fav}")
-            // تحديث RecyclerView Adapter
-            imgAdaptert.notifyDataSetChanged()
         }
+
     }
 
     fun InterstitialAd_fun() {
@@ -361,4 +288,3 @@ class ThirdFragment : Fragment() {
         )
     }
 }
-

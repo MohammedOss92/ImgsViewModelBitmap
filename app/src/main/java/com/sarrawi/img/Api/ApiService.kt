@@ -40,6 +40,8 @@ interface ApiService {
     ): Response<MyImgsRespone>
 
 
+    @GET("imgsapinew")
+    suspend fun getImgsNew():Response<ImgsRespone>
 
 
 

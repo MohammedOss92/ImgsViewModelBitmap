@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.favFragmentLinRecy,
                 R.id.pagerFragmentImg,
                 R.id.FirstFragment,
+                R.id.newImgFragment,
                 R.id.favoritePagerFrag
             ))
         appBarConfiguration = AppBarConfiguration(navController.graph)
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.splashScreenFragment ||destination.id == R.id.FirstFragment || destination.id == R.id.thirdFragment ||
                 destination.id == R.id.fourFragment || destination.id == R.id.favFragmentLinRecy
-                || destination.id == R.id.pagerFragmentImg || destination.id == R.id.favoritePagerFrag) {
+                || destination.id == R.id.pagerFragmentImg || destination.id == R.id.favoritePagerFrag||destination.id == R.id.newImgFragment) {
 
                 bottomNav.visibility = View.GONE
             } else {
