@@ -51,7 +51,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
         var adView: AdView?=null
         init {
             if(isInternetConnected) {
-                binding.imgFave.setOnClickListener {
+                binding.imgFave?.setOnClickListener {
                     onbtnClick?.invoke(img_list_Pager[position], position)
                 }
 
@@ -87,39 +87,41 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .skipMemoryCache(true)
 
-                Glide.with(con)
-                    .asBitmap()
-                    .load(current_imgModel.image_url)
-                    .apply(requestOptions)
+                binding.imageView?.let {
+                    Glide.with(con)
+                        .asBitmap()
+                        .load(current_imgModel.image_url)
+                        .apply(requestOptions)
 
-                    .into(binding.imageView)
+                        .into(it)
+                }
 
                 binding.lyNoInternet.visibility = View.GONE
 
                 binding.lyNoInternet.visibility = View.GONE
 
                 if (current_imgModel.new_img == 0) {
-                    binding.newImg.setVisibility(View.INVISIBLE)
+                    binding.newImg?.setVisibility(View.INVISIBLE)
                 } else {
-                    binding.newImg.setVisibility(View.VISIBLE)
+                    binding.newImg?.setVisibility(View.VISIBLE)
                 }
 
                 binding.apply {
                     if(current_imgModel.is_fav){
-                        imgFave.setImageResource(R.drawable.baseline_favorite_true)
+                        imgFave?.setImageResource(R.drawable.baseline_favorite_true)
                     }else{
-                        imgFave.setImageResource(R.drawable.baseline_favorite_border_false)
+                        imgFave?.setImageResource(R.drawable.baseline_favorite_border_false)
                     }
 
                 }
 
-                binding.saveImg.setOnClickListener {
+                binding.saveImg?.setOnClickListener {
 //                    onSaveImageClickListenerp?.onSaveImageClickp(adapterPosition)
-                    saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
+                    saveBitmapToExternalStorage((binding.imageView?.drawable as BitmapDrawable).bitmap)
                 }
 
-                binding.whatsapp.setOnClickListener {
-                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                binding.whatsapp?.setOnClickListener {
+                    val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                     val bitmap: Bitmap = drawable.bitmap
 
                     val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -148,9 +150,9 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
                 }
 
-                binding.messenger.setOnClickListener {
+                binding.messenger?.setOnClickListener {
 
-                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                    val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                     val bitmap: Bitmap = drawable.bitmap
 
                     val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -239,7 +241,7 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 
 
 
-                    val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                    val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                     val bitmap: Bitmap = drawable.bitmap
 
                     val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -285,16 +287,18 @@ class ViewPagerAdapter (val con: Context):RecyclerView.Adapter<ViewPagerAdapter.
 //                }
             } else {
                 // عند عدم وجود اتصال بالإنترنت، قم بعرض الـ lyNoInternet بدلاً من الصورة
-                Glide.with(con)
-                    .load(R.drawable.nonet) // تحميل صورة nonet.jpg
-                    .into(binding.imageView)
-                binding.imageView.visibility = View.GONE
+                binding.imageView?.let {
+                    Glide.with(con)
+                        .load(R.drawable.nonet) // تحميل صورة nonet.jpg
+                        .into(it)
+                }
+                binding.imageView?.visibility = View.GONE
                 binding.lyNoInternet.visibility = View.VISIBLE
-                binding.imgShare.visibility = View.GONE
-                binding.imgFave.visibility = View.GONE
-                binding.saveImg.visibility = View.GONE
-                binding.messenger.visibility = View.GONE
-                binding.whatsapp.visibility = View.GONE
+                binding.imgShare?.visibility = View.GONE
+                binding.imgFave?.visibility = View.GONE
+                binding.saveImg?.visibility = View.GONE
+                binding.messenger?.visibility = View.GONE
+                binding.whatsapp?.visibility = View.GONE
             }
 
 

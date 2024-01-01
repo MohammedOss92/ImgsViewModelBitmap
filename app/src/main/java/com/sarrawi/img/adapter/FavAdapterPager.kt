@@ -49,7 +49,7 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
         var adView: AdView?=null
 
         init {
-            binding.imgFave.setOnClickListener {
+            binding.imgFave?.setOnClickListener {
 //                onbtnclick?.invoke(fav_img_list[adapterPosition])
                 onbtnclick?.invoke(fav_img_list_pager[bindingAdapterPosition])
 
@@ -66,21 +66,23 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(true)
 
-            Glide.with(con)
-                .asBitmap()
-                .load(current_imgModel.image_url)
-                .apply(requestOptions)
+            binding.imageView?.let {
+                Glide.with(con)
+                    .asBitmap()
+                    .load(current_imgModel.image_url)
+                    .apply(requestOptions)
 
-                .into(binding.imageView)
-
-
-            binding.saveImg.setOnClickListener {
-//                onSaveImageClickListenerfp?.onSaveImageClickfp(adapterPosition)
-                saveBitmapToExternalStorage((binding.imageView.drawable as BitmapDrawable).bitmap)
+                    .into(it)
             }
 
-            binding.whatsapp.setOnClickListener {
-                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+
+            binding.saveImg?.setOnClickListener {
+//                onSaveImageClickListenerfp?.onSaveImageClickfp(adapterPosition)
+                saveBitmapToExternalStorage((binding.imageView?.drawable as BitmapDrawable).bitmap)
+            }
+
+            binding.whatsapp?.setOnClickListener {
+                val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                 val bitmap: Bitmap = drawable.bitmap
 
                 val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -109,9 +111,9 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 
             }
 
-            binding.messenger.setOnClickListener {
+            binding.messenger?.setOnClickListener {
 
-                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                 val bitmap: Bitmap = drawable.bitmap
 
                 val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -199,7 +201,7 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 
 
 
-                val drawable: BitmapDrawable = binding.imageView.getDrawable() as BitmapDrawable
+                val drawable: BitmapDrawable = binding.imageView?.getDrawable() as BitmapDrawable
                 val bitmap: Bitmap = drawable.bitmap
 
                 val bitmapPath: String = MediaStore.Images.Media.insertImage(
@@ -245,9 +247,9 @@ class FavAdapterPager(val con: Context): RecyclerView.Adapter<FavAdapterPager.Vi
 //            }
             adView=itemView.findViewById(R.id.adViewfpa)
             if (current_imgModel.new_img == 0) {
-                binding.newImg.setVisibility(View.INVISIBLE)
+                binding.newImg?.setVisibility(View.INVISIBLE)
             } else {
-                binding.newImg.setVisibility(View.VISIBLE)
+                binding.newImg?.setVisibility(View.VISIBLE)
             }
         }
     }

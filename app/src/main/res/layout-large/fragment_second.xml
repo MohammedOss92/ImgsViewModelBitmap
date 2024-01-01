@@ -4,19 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1f1f1d"
+    tools:context=".ui.frag.SecondFragment">
 
-    tools:context=".ui.frag.SplashScreenFragment">
-
-
-    <ImageView
-        android:id="@+id/imageView2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImgTypes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/iconn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:spanCount="2"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
